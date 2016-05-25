@@ -1,0 +1,1 @@
+Dans la programmation orienté objet, quand B est une extension de la classe A, Les variables et méthodes de A sont des méthodes de B, mais elles peuvent de pas étre accessibles private.

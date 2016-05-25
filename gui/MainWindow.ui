@@ -1,0 +1,496 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>936</width>
+    <height>576</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">background-color: rgb(255, 255, 255);</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QGridLayout" name="gridLayout_3">
+    <item row="0" column="1">
+     <widget class="QGroupBox" name="groupBox">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <layout class="QHBoxLayout" name="horizontalLayout_2">
+       <item>
+        <widget class="QLabel" name="label">
+         <property name="styleSheet">
+          <string notr="true">color: rgb(85, 0, 255);
+font: 14pt &quot;Consolas&quot;;</string>
+         </property>
+         <property name="text">
+          <string>User Name :</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="userName_label">
+         <property name="styleSheet">
+          <string notr="true">color: rgb(255, 0, 0);
+font: 14pt &quot;MS Shell Dlg 2&quot;;</string>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </item>
+    <item row="0" column="0">
+     <widget class="QLabel" name="status_label">
+      <property name="styleSheet">
+       <string notr="true">font: 11pt &quot;MS Shell Dlg 2&quot;
+rgb(255, 0, 0)</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="0">
+     <widget class="QGroupBox" name="groupBox">
+      <property name="title">
+       <string>Doc Test</string>
+      </property>
+      <layout class="QGridLayout" name="gridLayout_2">
+       <item row="0" column="0">
+        <layout class="QHBoxLayout" name="horizontalLayout">
+         <item>
+          <widget class="QPushButton" name="loadFile">
+           <property name="styleSheet">
+            <string notr="true"> QPushButton {
+background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #599bb3), color-stop(1, #1a5c66));
+	background:-moz-linear-gradient(top, #599bb3 5%, #1a5c66 100%);
+	background:-webkit-linear-gradient(top, #599bb3 5%, #1a5c66 100%);
+	background:-o-linear-gradient(top, #599bb3 5%, #1a5c66 100%);
+	background:-ms-linear-gradient(top, #599bb3 5%, #1a5c66 100%);
+	background:linear-gradient(to bottom, #599bb3 5%, #1a5c66 100%);
+	background-color:#599bb3;
+	
+	border-radius:3px;
+	border:1px solid #5c298f;
+	color:#ffffff;
+	font-family:arial;
+	font-size:17px;
+	padding:6px 24px;
+	text-decoration:none;
+	
+}
+QPushButton:hover {
+	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #1a5c66), color-stop(1, #599bb3));
+	background:-moz-linear-gradient(top, #1a5c66 5%, #599bb3 100%);
+	background:-webkit-linear-gradient(top, #1a5c66 5%, #599bb3 100%);
+	background:-o-linear-gradient(top, #1a5c66 5%, #599bb3 100%);
+	background:-ms-linear-gradient(top, #1a5c66 5%, #599bb3 100%);
+	background:linear-gradient(to bottom, #1a5c66 5%, #599bb3 100%);
+	background-color:#1a5c66;
+}
+QPushButton:active {
+	position:relative;
+	top:1px;
+}
+</string>
+           </property>
+           <property name="text">
+            <string>Load File</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="testPlagia_btn">
+           <property name="styleSheet">
+            <string notr="true"> QPushButton {
+background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #599bb3), color-stop(1, #1a5c66));
+	background:-moz-linear-gradient(top, #599bb3 5%, #1a5c66 100%);
+	background:-webkit-linear-gradient(top, #599bb3 5%, #1a5c66 100%);
+	background:-o-linear-gradient(top, #599bb3 5%, #1a5c66 100%);
+	background:-ms-linear-gradient(top, #599bb3 5%, #1a5c66 100%);
+	background:linear-gradient(to bottom, #599bb3 5%, #1a5c66 100%);
+	background-color:#599bb3;
+	
+	border-radius:3px;
+	border:1px solid #5c298f;
+	color:#ffffff;
+	font-family:arial;
+	font-size:17px;
+	padding:6px 24px;
+	text-decoration:none;
+	
+}
+QPushButton:hover {
+	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #1a5c66), color-stop(1, #599bb3));
+	background:-moz-linear-gradient(top, #1a5c66 5%, #599bb3 100%);
+	background:-webkit-linear-gradient(top, #1a5c66 5%, #599bb3 100%);
+	background:-o-linear-gradient(top, #1a5c66 5%, #599bb3 100%);
+	background:-ms-linear-gradient(top, #1a5c66 5%, #599bb3 100%);
+	background:linear-gradient(to bottom, #1a5c66 5%, #599bb3 100%);
+	background-color:#1a5c66;
+}
+QPushButton:active {
+	position:relative;
+	top:1px;
+}
+</string>
+           </property>
+           <property name="text">
+            <string>Start Test</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item row="1" column="0">
+        <widget class="QLabel" name="label_3">
+         <property name="styleSheet">
+          <string notr="true">color: rgb(170, 0, 0);
+font: 14pt &quot;MS Shell Dlg 2&quot;;</string>
+         </property>
+         <property name="text">
+          <string>Document From loacal /Web</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="0">
+        <layout class="QVBoxLayout" name="verticalLayout_2">
+         <item>
+          <widget class="QScrollArea" name="scrollArea">
+           <property name="widgetResizable">
+            <bool>true</bool>
+           </property>
+           <widget class="QWidget" name="scrollAreaWidgetContents">
+            <property name="geometry">
+             <rect>
+              <x>0</x>
+              <y>0</y>
+              <width>588</width>
+              <height>162</height>
+             </rect>
+            </property>
+            <layout class="QGridLayout" name="gridLayout_4">
+             <item row="0" column="0">
+              <widget class="QTextEdit" name="textBrows">
+               <property name="enabled">
+                <bool>true</bool>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">font: 9pt &quot;MS Shell Dlg 2&quot;;</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="label_5">
+           <property name="styleSheet">
+            <string notr="true">color: rgb(170, 0, 0);
+font: 14pt &quot;MS Shell Dlg 2&quot;;</string>
+           </property>
+           <property name="text">
+            <string>Document Tested For Plagia</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QScrollArea" name="scrollArea_2">
+           <property name="widgetResizable">
+            <bool>true</bool>
+           </property>
+           <widget class="QWidget" name="scrollAreaWidgetContents_2">
+            <property name="geometry">
+             <rect>
+              <x>0</x>
+              <y>0</y>
+              <width>588</width>
+              <height>162</height>
+             </rect>
+            </property>
+            <layout class="QGridLayout" name="gridLayout">
+             <item row="0" column="0">
+              <widget class="QTextBrowser" name="texBrows_original">
+               <property name="enabled">
+                <bool>true</bool>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">font: 9pt &quot;MS Shell Dlg 2&quot;;</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+          </widget>
+         </item>
+        </layout>
+       </item>
+      </layout>
+     </widget>
+    </item>
+    <item row="1" column="1">
+     <widget class="QGroupBox" name="groupBox">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="title">
+       <string>Results</string>
+      </property>
+      <layout class="QGridLayout" name="gridLayout_6">
+       <item row="0" column="0">
+        <widget class="QGroupBox" name="groupBox">
+         <property name="title">
+          <string/>
+         </property>
+         <layout class="QHBoxLayout" name="horizontalLayout_3">
+          <item>
+           <widget class="QLabel" name="label_2">
+            <property name="styleSheet">
+             <string notr="true">color: rgb(0, 0, 255);
+font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
+            </property>
+            <property name="text">
+             <string>Result</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="plagiaResult">
+            <property name="styleSheet">
+             <string notr="true">color: rgb(170, 0, 0);
+font: 14pt &quot;MS Shell Dlg 2&quot;;</string>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item row="1" column="0">
+        <layout class="QHBoxLayout" name="horizontalLayout_4">
+         <item>
+          <widget class="QPushButton" name="repport_btn">
+           <property name="styleSheet">
+            <string notr="true"> QPushButton {
+background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, color: rgb(0, 170, 0);), color-stop(1, #1a5c66));
+	background:-moz-linear-gradient(top, #599bb3 5%, #1a5c66 100%);
+	background:-webkit-linear-gradient(top, #599bb3 5%, #1a5c66 100%);
+	background:-o-linear-gradient(top, #599bb3 5%, #1a5c66 100%);
+	background:-ms-linear-gradient(top, #599bb3 5%, #1a5c66 100%);
+	background:linear-gradient(to bottom, #599bb3 5%, #1a5c66 100%);
+	background-color:#77d42a;
+	
+	border-radius:3px;
+	border:1px solid #5c298f;
+	color:#ffffff;
+	font-family:arial;
+	font-size:19px;
+	padding:6px 24px;
+	text-decoration:none;
+	
+}
+QPushButton:hover {
+	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #1a5c66), color-stop(1, #599bb3));
+	background:-moz-linear-gradient(top, #1a5c66 5%, #599bb3 100%);
+	background:-webkit-linear-gradient(top, #1a5c66 5%, #599bb3 100%);
+	background:-o-linear-gradient(top, #1a5c66 5%, #599bb3 100%);
+	background:-ms-linear-gradient(top, #1a5c66 5%, #599bb3 100%);
+	background:linear-gradient(to bottom, #1a5c66 5%, #599bb3 100%);
+	background-color:#1a5c66;
+}
+QPushButton:active {
+	position:relative;
+	top:1px;
+}
+</string>
+           </property>
+           <property name="text">
+            <string>Repport</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="sava_btn">
+           <property name="styleSheet">
+            <string notr="true"> QPushButton {
+background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, color: rgb(0, 170, 0);), color-stop(1, #1a5c66));
+	background:-moz-linear-gradient(top, #599bb3 5%, #1a5c66 100%);
+	background:-webkit-linear-gradient(top, #599bb3 5%, #1a5c66 100%);
+	background:-o-linear-gradient(top, #599bb3 5%, #1a5c66 100%);
+	background:-ms-linear-gradient(top, #599bb3 5%, #1a5c66 100%);
+	background:linear-gradient(to bottom, #599bb3 5%, #1a5c66 100%);
+	background-color:#77d42a;
+	
+	border-radius:3px;
+	border:1px solid #5c298f;
+	color:#ffffff;
+	font-family:arial;
+	font-size:19px;
+	padding:6px 24px;
+	text-decoration:none;
+	
+}
+QPushButton:hover {
+	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #1a5c66), color-stop(1, #599bb3));
+	background:-moz-linear-gradient(top, #1a5c66 5%, #599bb3 100%);
+	background:-webkit-linear-gradient(top, #1a5c66 5%, #599bb3 100%);
+	background:-o-linear-gradient(top, #1a5c66 5%, #599bb3 100%);
+	background:-ms-linear-gradient(top, #1a5c66 5%, #599bb3 100%);
+	background:linear-gradient(to bottom, #1a5c66 5%, #599bb3 100%);
+	background-color:#1a5c66;
+}
+QPushButton:active {
+	position:relative;
+	top:1px;
+}
+</string>
+           </property>
+           <property name="text">
+            <string>Save</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item row="2" column="0">
+        <widget class="QTabWidget" name="tabWidget">
+         <property name="currentIndex">
+          <number>0</number>
+         </property>
+         <widget class="QWidget" name="Page1">
+          <attribute name="title">
+           <string>Local</string>
+          </attribute>
+          <layout class="QGridLayout" name="gridLayout_5">
+           <item row="0" column="0">
+            <widget class="QListView" name="docs_Rsult_ListView">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Fixed" vsizetype="Expanding">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+         <widget class="QWidget" name="tab">
+          <attribute name="title">
+           <string>Web</string>
+          </attribute>
+          <layout class="QGridLayout" name="gridLayout_7">
+           <item row="0" column="0">
+            <widget class="QListView" name="docs_Rsult_ListView_2">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Fixed" vsizetype="Expanding">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>936</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menuFile">
+    <property name="title">
+     <string>File</string>
+    </property>
+    <addaction name="actionNew_File"/>
+    <addaction name="actionClose"/>
+   </widget>
+   <widget class="QMenu" name="menuAdmin">
+    <property name="title">
+     <string>Admin</string>
+    </property>
+    <addaction name="actionADD_user"/>
+   </widget>
+   <widget class="QMenu" name="menuEdit">
+    <property name="title">
+     <string>Edit</string>
+    </property>
+    <addaction name="actionSetting"/>
+   </widget>
+   <addaction name="menuFile"/>
+   <addaction name="menuEdit"/>
+   <addaction name="menuAdmin"/>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+  <action name="actionNew_File">
+   <property name="text">
+    <string>New File</string>
+   </property>
+  </action>
+  <action name="actionADD_user">
+   <property name="text">
+    <string>ADD user</string>
+   </property>
+  </action>
+  <action name="actionClose">
+   <property name="text">
+    <string>Close</string>
+   </property>
+  </action>
+  <action name="actionSetting">
+   <property name="text">
+    <string>Setting</string>
+   </property>
+  </action>
+ </widget>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>actionClose</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>close()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>467</x>
+     <y>294</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>listViewKliked()</slot>
+ </slots>
+</ui>

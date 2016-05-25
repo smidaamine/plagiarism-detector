@@ -1,0 +1,891 @@
+Binding Object Models to Source Code:
+
+An Approach to Object-Oriented Re-Architecting(cid:0)
+
+Johannes Weidl and Harald Gall
+
+Distributed Systems Group, Technical University of Vienna
+Argentinierstrasse 8/184-1, A-1040 Vienna, Austria, Europe
+
+fweidl, gallg@infosys.tuwien.ac.at
+
+Abstract
+
+Object-oriented re-architecting (OORA) concerns iden-
+tiﬁcation of objects in procedural code with the goal to
+transform a procedural into an object-oriented program.
+We have developed a method to address the problem of ob-
+ject identiﬁcation from two different directions: 1) building
+an object model of the application based on system doc-
+umentation to ensure the creation of application-semantic
+classes; and 2) analyzing the source code to identify po-
+tential class candidates on the basis of compound data
+types and data ﬂow analysis. Object model classes are
+bound to class candidates to prepare a forward biased and
+thus semantically meaningful program transformation at
+the source code level. In this paper, we deﬁne a similar-
+ity measure for classes to enables the binding process. We
+also describe the constraints and beneﬁts of human inter-
+vention in this process. We have applied this method to a
+real-world embedded software system to identify potential
+classes; results from the case study are given in the paper.
+
+1. Introduction
+
+Object-oriented re-architecting aims at the transforma-
+tion of procedural software into functionally equivalent
+object-oriented software. We have developed a reverse en-
+gineering technique called CORET (Capsule Oriented Re-
+verse Engineering Technique) that bases upon our pre-
+vious work [5, 6] but focuses on the object-oriented re-
+architecting of C to C++ programs.
+
+The essential part within each object-oriented re-
+architecting is the identiﬁcation of objects (or statically:
+classes.) Approaches such as Liu et al. [9, 10] group
+
+(cid:0)This work, that is pursued in cooperation with Klagenfurt University,
+is supported by the Austrian Science Fund (FWF), project no. P11.340
+¨OMA, and the ESPRIT project ARES, project no. 20477.
+
+data structures with routines that use them as parameters
+or return values. Yeh et al. [11] combine data structures
+with global data to form objects with routines as methods.
+Graph-based approaches such as [1, 4] use reference graphs
+and subgraphs to form objects on the basis of global vari-
+ables and functions.
+
+Our object-oriented re-architecting process addresses the
+object identiﬁcation from two directions: 1) an object model
+is built upon documentation of the system under study; and
+2) the source code is analyzed and class candidates are
+identiﬁed according to deﬁned criteria (see Section 2.1.)
+This approach is driven by the object model and, there-
+fore, allows the creation of classes with high application-
+semantics, i.e. classes that are sound abstractions of the ba-
+sic application concepts. In this paper, we present the bind-
+ing process of object models to source code that is one sub-
+process of our object-oriented re-architecting technique.
+
+CORET has been developed using an embedded soft-
+ware system as a real-world case study. For this, persistent
+data stores as used in our previous approach [5, 6] cannot be
+used as class candidates. CORET works with C and focuses
+on compound data types (e.g. structs) as object-establishing
+entities. Because the application-semantic signiﬁcance of
+a compound type as a basic building block of the applica-
+tion cannot be assessed at the source code level, a reverse
+generation of an object model from the source code is not
+feasible.
+
+For this, we generate an object model from design and
+implementation related documentation that is ‘close to the
+source code.’ This means that the object model is intended
+to exactly represent the procedural system without rigor-
+ously introducing high-level object-oriented concepts such
+as inheritance. This low abstraction level allows a bind-
+ing of class candidates to object model entities. Following
+this approach, we minimize the concept assignment prob-
+lem (see [3].)
+In the sequel, we will address this object
+model as ‘OMdesign(cid:0)OMD(cid:1).’
+
+To introduce high-level object-oriented concepts such
+as inheritance and aggregation we additionally create
+
+an object model based upon the system requirements
+(OMrequirements or OMR) and map OMD to OMR
+classes. This mapping process of OORA is beyond the
+scope of this paper. To create and maintain different object
+models we use the object-oriented modeling tool Rational
+ROSE1 and the Uniﬁed Modeling Language (UML) nota-
+tion.
+
+In the sequel, we describe the main processes in CORET:
+First, the source code is parsed (analyzing process) and the
+object models (OMD and OMR) are created (modeling pro-
+cess; see [8].) Then, the binding process is performed. The
+mapping process matches the OMD and OMR models to
+come to an object model that serves as the basis for the sys-
+tem transformation. Finally, in the transformation process
+the procedural source code is transformed by transforming
+the abstract syntax tree generated in the analyzing process.
+The binding process is semi-automated, an engineer
+is supposed to interact with the binding tool to inject
+application-speciﬁc knowledge and thus improve the bind-
+ing result. We applied our methodology to a part of a Train
+Control System which is an embedded software system and
+present several results later on in this paper.
+
+The remainder of the paper is organized as follows: Sec-
+tion 2 introduces the binding methodology, in Section 3 the
+similarity measure is described. Section 4 explains the bind-
+ing process in detail. Section 5 presents our case study, Sec-
+tion 6 draws some conclusions.
+
+2. The binding methodology
+
+The binding methodology can be brieﬂy surveyed as fol-
+
+lows:
+
+Design and implementation related system documenta-
+tion is used to create an object model (OMD.) Because
+the modeling process is carried out by an engineer using
+application-speciﬁc information, the application-semantic
+signiﬁcance of the objects in the model is trusted.
+
+Class candidates are identiﬁed in the source code using
+deﬁned criteria (see Section 2.1.) The identiﬁcation step is
+automated e.g. by using standard reverse engineering tools
+(we experimented with Imagix4D2) or by parsing and ana-
+lyzing the source code with our CORET toolset. For this,
+the application-semantic signiﬁcance of class candidates is
+questionable.
+
+The problem of binding object model entities to source
+code entities is mapped to the problem of ﬁnding matches
+class to class candidate. This problem in turn is addressed
+by deﬁning a similarity measure between classes. For this,
+we understand class candidates as classes (i.e. variables as
+attributes, procedures and functions as methods) and base a
+
+1Rational ROSE is a trademark of Rational Software Corp.
+2Imagix4D is a trademark of Imagix Corp.
+
+c
+
+class name
+
+an attribute names
+attribute types
+at
+operation return types
+or
+on operations names
+opn operation parameter names
+operation parameter types
+opt
+asn association names
+association types
+ast
+number of attributes of the class
+(cid:2)a
+number of operations of the class
+(cid:2)o
+number of associations of the class
+(cid:2)as
+
+Table 1. Class signature parts
+
+binding between classes and class candidates on their class
+similarity.
+
+2.1. Class signatures and class candidates
+
+We introduce the notion of a class signature.
+
+Class signature. The class signature sc of a class c
+consists of class signature parts shown in Table 1. We
+use class signatures as the basis for determining similarity
+between classes. We deﬁne the following operations on the
+set S of class signatures:
+
+(cid:1) sci (cid:0) scj (cid:1) (all class signature parts are equal
+(i.e. same names and types of attributes, operations,
+parameters, and associations) except (cid:2)a, (cid:2)o, and (cid:2)as
+for which the following condition holds:
+(cid:0)aci (cid:2) (cid:0)acj (cid:3) (cid:0)oci (cid:2) (cid:0)ocj (cid:3) (cid:0)asci (cid:2) (cid:0)ascj )
+
+(cid:1) sci (cid:1) scj (cid:1) (cid:2)sci (cid:0) scj (cid:3) scj (cid:0) sci (cid:3)
+(cid:1) sci (cid:4) scj (cid:1) (cid:2)sci (cid:0) scj (cid:3) sci (cid:1) scj (cid:3)
+
+Furthermore, we deﬁne the notion of a class candidate.
+
+Class candidate. An class candidate is a set of source
+code elements that is understood as a class but which
+application-semantic signiﬁcance is not
+trusted. Class
+candidates are automatically identiﬁed in the source code
+and are an intermediate representation of source code
+elements. We consider the following class candidates:
+
+(cid:1) Compound data types together with related procedures
+and functions (e.g. structs together with procedures
+and functions that use and/or manipulate the data type.)
+(cid:1) Sets of global variables grouped by data ﬂow analysis
+together with the corresponding procedures and func-
+tions. (e.g. global variables, that are jointly used and/or
+manipulated in procedures and functions.)
+
+3. A similarity measure for classes
+
+The binding process is supposed to assign OMD classes
+to class candidates. Such an assignment should happen, if
+the application-semantics of the two entities is equal or, at
+least, similar. For this purpose, we deﬁne a similarity mea-
+sure between classes based on a class signature comparison.
+We deﬁne a similarity measure function fSM (cid:3) (cid:0)sci (cid:0) scj (cid:1) (cid:3)
+(cid:4) (cid:0) (cid:7). fSM assigns each pair of class signatures a real value
+between 0 and 1 expressing their similarity. From a high
+similarity in the class signatures (i.e. same number, names,
+types of attributes, same method signatures, etc.) we con-
+clude a high (application-) semantic similarity of the enti-
+ties involved. We claim that entities with a similar semantic
+content in many cases have similar class signatures and vice
+versa. We use the following class signature parts for mea-
+suring the similarity of classes: c, an, at, or, on, opn, opt,
+#a, #o (see Table 1.) We now introduce the similarity mea-
+sure step by step:
+
+sfsum (cid:1) sfc (cid:6) wc (cid:4)
+
+(cid:4) sfan (cid:6) wan (cid:4) sfat (cid:6) wat (cid:4)
+
+(cid:4) sfor (cid:6) wor (cid:4) sfon (cid:6) won (cid:4)
+
+(cid:4) sfopn (cid:6) wopn (cid:4) sfopt (cid:6) wopt
+
+First, we introduce the terminology by giving some def-
+
+initions:
+Similarity factor sf. The similarity between class signa-
+ture parts expressed as a real value between 0 and 1 is called
+similarity factor sf. For each class signature part x, a simi-
+larity factor sfx is computed.
+Similarity factor weight wx. The similarity factor weight
+wx as a real value between 0 and 1 is used to weigh each
+similarity factor in the similarity measure computation.
+Weight vector w. The weight vector w consists of all sim-
+ilarity factor weights wxi. The sum of all weight vector
+components is supposed to be 1.
+w (cid:1) (cid:2)wc(cid:0) wan(cid:0) wat(cid:0) wor(cid:0) won(cid:0) wopn(cid:0) wopt(cid:3)
+
+The similarity factors between the class signature parts
+are computed and summed up in sfsum considering a
+weight factor for each sf. This means, that the inﬂuence
+of the similarity factors (sfs) on the sum can be controlled
+by using a weight vector w. Using weights, the similarity
+measure result can be focused e.g. to attributes by setting
+the sf weights accordingly.
+
+Next, we introduce mina and maxa as the minimum
+and maximum number of attributes regarding two classes
+c and c. The function (cid:2)a returns the number of attributes
+of a class. For operations, mino, maxo, and (cid:2)o are deﬁned
+accordingly.
+
+mina (cid:1) min(cid:2)(cid:0)a(cid:2)c(cid:3)(cid:0) (cid:0)a(cid:2)c(cid:3)(cid:3)
+
+maxa (cid:1) max(cid:2)(cid:0)a(cid:2)c(cid:3)(cid:0) (cid:0)a(cid:2)c(cid:3)(cid:3)
+
+We further introduce sfmax, which is the maximum sf
+possible if the two classes compared are of different granu-
+larity (i.e. the number of attributes and operations differs.)
+sfid is the maximum sf possible if the two classes have the
+same granularity (for this, it is called ‘ideal sf’.)
+
+sfmax (cid:1) wc (cid:4) mina (cid:6) (cid:2)wan (cid:4) wat(cid:3) (cid:4)
+
+(cid:4) mino (cid:6) (cid:2)wor (cid:4) wot (cid:4) wopn (cid:4) wopt(cid:3)
+
+sfid (cid:1) wc (cid:4) maxa (cid:6) (cid:2)wan (cid:4) wat(cid:3) (cid:4)
+
+(cid:4) maxo (cid:6) (cid:2)wor (cid:4) wot (cid:4) wopn (cid:4) wopt(cid:3)
+
+We distinguish between the similarity of classes 1) con-
+sidering granularity differences (osf) and 2) not consider-
+ing granularity (osfpo.)
+
+osf (cid:1)
+
+sfsum
+sfid
+
+osfpo (cid:1)
+
+sfsum
+sfmax
+
+Part-of overall similarity factor osfpo. The similarity
+between two classes without considering the difference in
+granularity is called part-of overall similarity factor osfpo.
+osfpo (cid:1)  (cid:1) (cid:2)sci (cid:0) scj (cid:7) scj (cid:0) sci (cid:3) for two class signatures
+sci and scj
+Overall similarity factor osf. The similarity between two
+classes considering the difference in granularity is called
+overall similarity factor osf.
+osf (cid:1)  (cid:1) sci (cid:1) scj for two class signatures sci and scj
+
+In the sequel, we describe the different similarity check
+
+techniques for the class signature parts.
+
+3.1. Syntactic similarity
+
+For measuring the similarity of class names, attribute
+names, operation names, and parameter names fuzzy text
+comparison is used [2]. When comparing strings, fuzzy
+text comparison does not give a crisp result but divides the
+string into substrings of a ﬁxed length3, counts the substring
+matches, and accordingly computes a real number between
+0 and 1 that expresses the orthographic similarity of the
+strings. The similarity sfc between the name cc of class c
+and the name ccc of class candidate cc is deﬁned as follows:
+
+sfc (cid:1) f uzzytextcompare(cid:2)cc(cid:0) ccc(cid:3)
+
+sfanij (cid:1) f uzzytextcompare(cid:2)ani(cid:0) anj (cid:3)
+
+sfanij is computed for each pair (ani, anj), where ani
+is the name of the i-th attribute of a class c and anj is the
+name of the j-th attribute of a class candidate cc. The mina
+highest sfanij values are summed up in sfan. An attribute
+name is allowed to contribute only once to the sum, that
+
+3We use so-called tri-grams (substrings of length 3.)
+
+tmf:
+
+char
+int
+float
+...
+
+tmd:
+
+char
+
+int
+
+float
+
+...
+
+1
+.6
+0
+
+1
+.2
+
+1
+
+1
+
+              design
+
+scalar
+
+sized
+
+implem.
+scalar
+sized
+pointer
+
+1
+
+1/size
+
+.9
+
+1/size
+
+size</size>
+
+.9
+
+Figure 1. Fundamental type matrix tmf and
+derived type matrix tmd
+
+means if sfanij is used in the sum sfan, all sfanik with
+k (cid:8) j and sfanlj with l (cid:8) i must not be considered in the
+further sfan computation. Thus, only the best match of a
+class attribute name to a class candidate attribute name is
+considered in the sfan sum. For operation and parameter
+names, the sf computation is performed analogously.
+
+3.2. Type similarity
+
+The similarity of types is based on a semantic compar-
+ison using type similarity matrices. We use two matrices,
+the fundamental type similarity matrix and the derived type
+similarity matrix. For each two fundamental (or built-in)
+types (such as int, char, etc. in C), the fundamental type
+similarity matrix speciﬁes their similarity as a real value be-
+tween 0 and 1. We established such a matrix by heuristically
+assessing the semantic similarity of types. As an example,
+for the pair (int, float) we use  (cid:1).
+
+The derived type similarity matrix is used when compar-
+ing a derived type (i.e. sized4 and pointer) with a scalar5
+type or when comparing two derived types. The OMD
+types are either scalar or sized. In the source code, the de-
+rived type class pointer additionally occurs. When an entity
+is of a user-deﬁned type, the type has to be examined for its
+components recursively. Figure 1 shows the fundamental
+and derived type matrices.
+
+sf tf undamental (cid:1) tmf (cid:6)f type(cid:2)ai(cid:3)(cid:0) f type(cid:2)aj(cid:3)(cid:7)
+
+sf tderived (cid:1) tmd(cid:6)dtype(cid:2)ai(cid:3)(cid:0) dtype(cid:2)aj(cid:3)(cid:7)
+
+sf tatij (cid:1) sf tf undamental (cid:6) sf tderived
+
+sf tf undamental and sf tderived are computed for each
+pair (ai, aj), where ai is the i-th attribute of a class c and
+
+4A sized type is a container for a well-deﬁned number of data of a scalar
+
+type, e.g. int b[6];
+
+5e.g. int a;
+
+aj is the j-th attribute of a class candidate cc. f type(cid:0)e(cid:1)
+is a function returning the fundamental type of an entity e.
+dtype(cid:0)e(cid:1) returns the derived type of e. sf tf undamental and
+sf tderived are multiplied. Thus, since the factors are (cid:5) ,
+the similarity between two typed entities is reduced accord-
+ing to the factors. The speciﬁc sfat computation is analo-
+gous to the sfan computation (see Section 3.1.) For oper-
+ation return types and parameter types, the sf computation
+is performed as described above.
+
+Using type matrices, the similarity measure is customiz-
+able to different applications and domains by adopting the
+matrix entries accordingly. By deﬁning the class signature
+part sfs in this way, we can be sure that a higher similarity
+leads to a higher osf and that fSM (cid:0)sci (cid:0) sci(cid:1) (cid:8) .
+
+4. The binding process
+
+The result of the similarity check is the osf table. The osf
+table contains osf and osfpo for each pair of class and class
+candidate. Additionally, it stores the weight vector used for
+the computation and the single signature part sfs.
+
+The osf table is the starting point for the binding process.
+In the binding process, certain system functionality (OMD
+classes) is linked to its implementation (parts of the source
+code.) Human interaction is used in the binding process to
+resolve binding conﬂicts and optimize the binding result by
+introducing application and domain knowledge. A function
+assessing the quality of a binding result quantitatively could
+have a local maximum when all OMD classes are bound to
+class candidates. A global maximum would be a local max-
+imum, where all bindings have the maximum osf possible.
+The result of the binding process is the binding table.
+The binding table stores information, which classes corre-
+spond to what class candidates. This means, it is a set of ex-
+plicit links between OMD model entities and source code
+entities that is used to transform procedural into object-
+oriented source code. Furthermore, the binding table rep-
+resents high-level documentation which can be used in sys-
+tem maintenance. Using the binding table, it is possible to
+directly navigate from model entities to the position in the
+source code where they are implemented.
+
+4.1. Binding process strategies
+
+Different strategies can be used to come to a binding re-
+
+sult. Consider the following simple binding strategy:
+
+1. Sort the osf table in descending order according to the
+
+osf-value.
+
+2. Start with the ﬁrst element in the osf table, i.e. the ele-
+
+ment with the highest osf.
+
+3. Move the osf table entry to the binding table.
+4. Mark all osf table entries containing the object or ob-
+
+ject candidate of the binding just made.
+
+5. If an osf table entry remains unmarked continue with
+
+step 3.
+
+This strategy has a major drawback in that no human in-
+tervention is possible to resolve binding conﬂicts and pre-
+vent incorrect (qualitatively in the sense of unreasonable)
+bindings. For this, we extended the above binding strategy
+(for more details on binding strategies see [7].) An engi-
+neer is allowed to deﬁne urged bindings before the begin-
+ning of the process. Urged bindings are bindings, the engi-
+neer knows about a priori because of his/her application or
+domain speciﬁc knowledge. Furthermore, bindings can be
+deﬁned that must not be made and are dropped when occur-
+ring in the binding process (forbidden bindings.)
+
+The binding algorithm presented above is done itera-
+tively. After each step the engineer decides which bindings
+will be ﬁxed. Fixed bindings are added to the list of urged
+bindings for the next iteration step. If there is a binding con-
+ﬂict (e.g. there are two source code entities that have about
+the same osf with the same model entity), the engineer is
+asked to resolve the conﬂict and ﬁx the correct binding. The
+process stops when all bindings are ﬁxed. This is the bind-
+ing strategy used in our case study.
+
+5. Case study
+
+Our case study is part of a Train Control System that
+is a real-world embedded software system provided by an
+industrial partner. The system under study is one version
+of a family of systems which are safety-critical and have
+strong timing considerations. The software is programmed
+in C and Assembler and has to run on different develop-
+ment and target environments. The system controls high
+speed train movement and realizes precision stops in met-
+ros. We applied the binding methodology to a part of the
+system dealing with the reception, decoding, and distribu-
+tion of messages. For this, we have implemented a binding
+tool in JAVA that automates the similarity check and sup-
+ports the binding process. We present a small example from
+the case study.
+
+The following alphabetically sorted binding table shows
+the correct (qualitatively in terms of most reasonable) bind-
+ing of a subset of OMD classes to a subset of class candi-
+dates6:
+(cid:0)
+
+(cid:2)
+
+class candidate : class
+
+CDDATA : DCD_Message
+DMDATA : DDM_Message
+FB1_VIRTUAL : TR_Message
+FB2_TYPE : ML_Message
+LCDATA : DLC_Message
+SPDATA : DSP_Message
+
+(cid:1)
+
+(cid:3)
+
+6For conﬁdentiality reasons, we have changed the class and class can-
+didate names. The values shown in the examples were computed using the
+original names.
+
+In the sequel, we use the weight vector w (cid:8)
+(cid:0)(cid:1)(cid:0) (cid:1)(cid:0) (cid:1)(cid:0) (cid:1)(cid:0) (cid:1)(cid:0) (cid:1)(cid:0) (cid:1)(cid:1), which gives all class signa-
+ture parts about the same weight. By modifying the weights
+the measure can be biased to particular class signature parts.
+The similarity check results in an osf table:
+(cid:0)
+
+(cid:2)
+
+class candidate:class sfc sfan
+
+osf
+sfor sfon sfopn sfopt osfpo
+
+sfat
+
+...
+SPDATA:DSP_Message
+
+SPDATA:DLC_Message
+
+0.091 0.83
+1 0.12
+0 0.56
+1 0.12
+
+1
+0
+0.78
+0
+
+0.36
+0.7
+0.28
+0.55
+
+0
+
+0
+
+...
+
+(cid:1)
+
+(cid:3)
+
+Using the binding strategy of Section 4.1, the osf table
+
+given above leads to the following binding table:
+(cid:0)
+
+class candidate : class
+
+osf
+
+osfpo
+
+LCDATA : DLC_Message
+DMDATA : DDM_Message
+FB2_TYPE : ML_Message
+CDDATA : DSP_Message
+FB1_VIRTUAL : TR_Message
+SPDATA : DC
+
+(cid:1)
+
+0.5
+0.39
+0.38
+0.38
+0.3
+0.26
+
+0.79
+0.64
+0.66
+0.69
+0.62
+0.39
+
+(cid:2)
+
+(cid:3)
+
+The suggested binding of CDDATA to DSP Message
+with osf  (cid:1) is incorrect because the correct binding part-
+ner (class DCD Message) has only two attributes (because
+of a lack of information in the design documentation.) This
+granularity difference causes a small osf between CDDATA
+and DCD Message.
+
+The osf-value between SPDATA and DSP Message
+(which is the correct binding) is only  (cid:1), again because
+of a granularity difference in the number of attributes of
+these entities. Thus, CDDATA and SPDATA are bound in-
+correctly. This suboptimal binding will be improved in the
+sequel.
+
+After the ﬁrst iteration, the engineer ﬁxes the binding
+LCDATA to DLC Message by adding it to the list of urged
+bindings7. Since the next three bindings have about the
+same osf, the engineer uses his/her application knowledge,
+system documentation, or the source code to reason about
+the correctness of the bindings. We assume, the engineer
+ﬁnds out, that the binding CDDATA to DSP Message is
+incorrect. He forbids the binding and starts the next step of
+the binding process:
+(cid:0)
+
+(cid:2)
+
+class candidate : class
+
+osf
+
+osfpo
+
+LCDATA : DLC_Message
+DMDATA : DDM_Message
+FB2_TYPE : ML_Message
+SPDATA : DSP_Message
+FB1_VIRTUAL : TR_Message
+CDDATA : DC
+
+(cid:1)
+
+1
+0.39
+0.38
+0.36
+0.3
+0.27
+
+1
+0.64
+0.66
+0.7
+0.62
+0.39
+
+(cid:3)
+
+7A pair of entities in an urged binding is assigned 1 for its osf and
+
+osfpo values.
+
+By introducing a ‘ﬁxed point’ (certainty) into the pro-
+cess, the binding table changes. Because of the granular-
+ity difference of CDDATA and DCD Message mentioned
+above, CDDATA is bound incorrectly again, in this case to
+the class DC. This has to be resolved via human interaction.
+forbidding the binding CDDATA to
+DSP Message, the engineer could as well have found out,
+that the binding CDDATA to DCD Message is the correct
+binding and could have decided to add it to the list of urged
+bindings:
+(cid:0)
+
+Instead of
+
+(cid:2)
+
+class candidate : class
+
+osf
+
+osfpo
+
+CDDATA : DCD_Message
+LCDATA : DLC_Message
+DMDATA : DDM_Message
+FB2_TYPE : ML_Message
+SPDATA : DSP_Message
+FB1_VIRTUAL : TR_Message
+
+1
+1
+0.39
+0.38
+0.36
+0.3
+
+1
+1
+0.64
+0.66
+0.7
+0.62
+
+(cid:1)
+
+This directly leads to the correct binding result. After
+approving all remaining bindings as ﬁxed, the process stops
+and the binding is ﬁnished.
+
+(cid:3)
+
+5.1. Results
+
+On the basis of our examinations of the case study, we
+
+get the following results:
+
+(cid:1) The binding results based on our similarity measure
+exceeded our expectations since it seems indeed rea-
+sonable to conclude an application semantic similar-
+ity of classes and class candidates from a syntac-
+tic/semantic similarity of class signatures.
+
+(cid:1) Fixing bindings by an engineer leads to convergence
+in the binding process, i.e. the process stops when all
+bindings have been ﬁxed. By suggesting bindings, in-
+correct suggestions can be proved and resolved. By
+ﬁxing a binding, certainty about the binding is intro-
+duced and the further process only concentrates on the
+binding candidates that are left.
+
+(cid:1) Meaningful entity names are important but not a pre-
+
+condition in our similarity measure.
+
+(cid:1) The attribute comparison without considering opera-
+
+tions leads to good results.
+
+(cid:1) Because our case study is an embedded software sys-
+tem,
+the operation comparison does not have big
+impact. We expect information systems to have a
+higher granularity in operations than embedded sys-
+tems, yielding a better result in the operation similarity
+check.
+
+6. Conclusion
+
+In this paper, we presented a method to address the prob-
+lem of object identiﬁcation in re-architecting C to C++ pro-
+grams: object model entities are bound to class candidates
+
+derived from the source code to prepare a forward-driven
+and thus semantically meaningful program transformation.
+We deﬁned a similarity measure for classes based on class
+signatures and explained how this measure can be used to
+set up a binding process.
+
+Binding, as introduced, is a semi-automated method for
+forward-driven object identiﬁcation. Human interaction is
+necessary to resolve binding conﬂicts and to detect and re-
+solve incorrect bindings.
+
+Our examinations of a real-world embedded software
+system have shown that our binding strategies lead to
+good results, i.e. the identiﬁcation of application-semantic
+classes. The integration of human interaction in the binding
+process gives the binding result high reliability.
+
+7. Acknowledgments
+
+We are grateful to Roland Mittermeir, Ren´e Kl¨osch, and
+Dominik Rauner-Reithmayer for many interesting discus-
+sions and valuable comments.
+
+References
+
+[1] B. L. Achee and D. L. Carver. A greedy approach to object
+identiﬁcation in imperative code. 2 th International Work-
+shop on Program Comprehension (IWPC ’94), Washington,
+D.C., USA, pages 4–11. Institute of Electrical and Electron-
+ics Engineers, November 1994.
+
+[2] R. C. Angell, G. E. Freund, and P. Willett. Automatic
+spelling correction using a trigram similarity measure. In-
+formation Processing & Management, 19(4):255–61, 1983.
+[3] T. J. Biggerstaff, B. G. Mitbander, and D. E. Webster. Pro-
+gram understanding and the concept assignment problem.
+Communications of the ACM, 37(5):72–83, May 1994.
+
+[4] G. Canfora, A. Cimitile, and M. Munro. An improved algo-
+rithm for identifying objects in code. Software Practice and
+Experience, 26(1):25–48, January 1996.
+
+[5] H. Gall, R. Kl¨osch, and R. Mittermeir. Object-oriented re-
+architecturing. 5 th European Software Engineering Confer-
+ence (ESEC ’95). Springer Verlag, Berlin, September 1995.
+[6] H. Gall, R. Kl¨osch, and R. Mittermeir. Using domain knowl-
+edge to improve reverse engineering.
+International Jour-
+nal of Software Engineering and Knowledge Engineering,
+6(3):477–505, 1996.
+
+[7] H. Gall and J. Weidl. Binding object models to source code:
+an approach to object-oriented re-architecting. Technical
+report, Distributed Systems Group, Technical University of
+Vienna, September 1997.
+
+[8] H. Gall and J. Weidl. Object-model driven abstraction-
+to-code mapping. Technical report, Distributed Systems
+Group, Technical University of Vienna, December 1997.
+
+[9] S. Liu and N. Wilde. Identifying objects in a conventional
+procedural language: An example of data design recovery.
+IEEE Conference on Software Maintenance, pages 266–71,
+November 1990.
+
+[10] R. M. Ogando, S. S. Yau, S. S. Liu, and N. Wilde. An ob-
+ject ﬁnder for program structure understanding in software
+maintenance. Journal of Software Maintenance: Research
+and Practice, 6:261–83, 1994.
+
+[11] A. Yeh, D. Harris, and H. Reubenstein. Recovering abstract
+data types and object instances from a conventional proce-
+dural language. 2 nd Working Conference on Reverse Engi-
+neering (WRCE ’95), pages 227–36. IEEE Computer Soci-
+ety Press, July 1995.
+
+

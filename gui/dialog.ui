@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>LoginDialog</class>
+ <widget class="QDialog" name="LoginDialog">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>452</width>
+    <height>195</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Dialog</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">background-color: rgb(255, 255, 255);</string>
+  </property>
+  <layout class="QGridLayout" name="gridLayout">
+   <item row="1" column="0">
+    <layout class="QHBoxLayout" name="horizontalLayout_2">
+     <item>
+      <widget class="QPushButton" name="logInBtn">
+       <property name="styleSheet">
+        <string notr="true"> QPushButton {
+background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, color: rgb(0, 170, 0);), color-stop(1, #1a5c66));
+	background:-moz-linear-gradient(top, #599bb3 5%, #1a5c66 100%);
+	background:-webkit-linear-gradient(top, #599bb3 5%, #1a5c66 100%);
+	background:-o-linear-gradient(top, #599bb3 5%, #1a5c66 100%);
+	background:-ms-linear-gradient(top, #599bb3 5%, #1a5c66 100%);
+	background:linear-gradient(to bottom, #599bb3 5%, #1a5c66 100%);
+	background-color:#007dc1;
+	
+	border-radius:3px;
+	border:1px solid #5c298f;
+	color:#ffffff;
+	font-family:arial;
+	font-size:19px;
+	padding:6px 24px;
+	text-decoration:none;
+	
+}
+QPushButton:hover {
+	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #1a5c66), color-stop(1, #599bb3));
+	background:-moz-linear-gradient(top, #1a5c66 5%, #599bb3 100%);
+	background:-webkit-linear-gradient(top, #1a5c66 5%, #599bb3 100%);
+	background:-o-linear-gradient(top, #1a5c66 5%, #599bb3 100%);
+	background:-ms-linear-gradient(top, #1a5c66 5%, #599bb3 100%);
+	background:linear-gradient(to bottom, #1a5c66 5%, #599bb3 100%);
+	background-color:#1a5c66;
+}
+QPushButton:active {
+	position:relative;
+	top:1px;
+}
+</string>
+       </property>
+       <property name="text">
+        <string>LogIn</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="cancelBtn">
+       <property name="styleSheet">
+        <string notr="true"> QPushButton {
+background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, color: rgb(0, 170, 0);), color-stop(1, #1a5c66));
+	background:-moz-linear-gradient(top, #599bb3 5%, #1a5c66 100%);
+	background:-webkit-linear-gradient(top, #599bb3 5%, #1a5c66 100%);
+	background:-o-linear-gradient(top, #599bb3 5%, #1a5c66 100%);
+	background:-ms-linear-gradient(top, #599bb3 5%, #1a5c66 100%);
+	background:linear-gradient(to bottom, #599bb3 5%, #1a5c66 100%);
+	background-color:#a73f2d;
+	
+	border-radius:3px;
+	border:1px solid #5c298f;
+	color:#ffffff;
+	font-family:arial;
+	font-size:19px;
+	padding:6px 24px;
+	text-decoration:none;
+	
+}
+QPushButton:hover {
+	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #1a5c66), color-stop(1, #599bb3));
+	background:-moz-linear-gradient(top, #1a5c66 5%, #599bb3 100%);
+	background:-webkit-linear-gradient(top, #1a5c66 5%, #599bb3 100%);
+	background:-o-linear-gradient(top, #1a5c66 5%, #599bb3 100%);
+	background:-ms-linear-gradient(top, #1a5c66 5%, #599bb3 100%);
+	background:linear-gradient(to bottom, #1a5c66 5%, #599bb3 100%);
+	background-color:#1a5c66;
+}
+QPushButton:active {
+	position:relative;
+	top:1px;
+}
+</string>
+       </property>
+       <property name="text">
+        <string>Cancel</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item row="0" column="0">
+    <widget class="QGroupBox" name="groupBox">
+     <property name="styleSheet">
+      <string notr="true">
+font: 75 10pt &quot;MS Shell Dlg 2&quot;;</string>
+     </property>
+     <property name="title">
+      <string>LogIn </string>
+     </property>
+     <layout class="QHBoxLayout" name="horizontalLayout">
+      <item>
+       <layout class="QVBoxLayout" name="verticalLayout_2">
+        <item>
+         <widget class="QLabel" name="userName_label">
+          <property name="text">
+           <string>UerName</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="password_lable">
+          <property name="text">
+           <string>PassWord</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <layout class="QVBoxLayout" name="verticalLayout">
+        <item>
+         <widget class="QLineEdit" name="userName_Text"/>
+        </item>
+        <item>
+         <widget class="QLineEdit" name="password_ttext">
+          <property name="inputMask">
+           <string/>
+          </property>
+          <property name="echoMode">
+           <enum>QLineEdit::Password</enum>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+     </layout>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>cancelBtn</sender>
+   <signal>clicked()</signal>
+   <receiver>LoginDialog</receiver>
+   <slot>closeDialog()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>137</x>
+     <y>140</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>83</x>
+     <y>165</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>logInBtn</sender>
+   <signal>clicked()</signal>
+   <receiver>LoginDialog</receiver>
+   <slot>login_clik()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>275</x>
+     <y>149</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>379</x>
+     <y>166</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>closeDialog()</slot>
+  <slot>login_clik()</slot>
+ </slots>
+</ui>

@@ -1,0 +1,20 @@
+For  practical  reasons,  in  this  paper  we 
+selected  a  subset  of  the  PAN  
+corpus:  the  first 
+simple  string  matching  techniques,  document 
+level  processing  is  a  more  realistic  scenario  for 
+this  feasibility  study
+1,000  suspicious  documents,  along  with  all 
+11,147  source  documents.  Since  our  goal  is  to 
+investigate  external  plagiarism  of  English  texts, 
+all intrinsic and translated plagiarism cases were 
+excluded from the dataset. We therefore removed 
+186  cases  from  the  subset  of  1,000  suspicious 
+documents  and  731  non-English  cases  from  the 
+
+transform  words  into  their  stems  by  removal  of 
+derivational  affixes,  for  example:
+„computational?, „computing?  and  compute? will 
+be returned to the base form comput?. Stemming 
+is  used  as  a  common  pre-processing  method  in 
+plagiarism  detection  task  and  we  have

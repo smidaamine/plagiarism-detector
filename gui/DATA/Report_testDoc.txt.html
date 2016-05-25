@@ -1,0 +1,428 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <title>Plagiarism Checker | Viper - Free Plagiarism Checker and Scanner Software</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <link href="http://feeds.feedburner.com/ViperScanner" rel="alternate" type="application/rss+xml" title="ScanMyEssay RSS. News &amp; Updates"/>
+        <link href="http://www.scanmyessay.com/css/main.css" rel="stylesheet" type="text/css"/>
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js" type="text/javascript"></script>
+        <script src="http://code.jquery.com/ui/1.8.21/jquery-ui.min.js" type="text/javascript"></script>
+        <link rel="shortcut icon" href="http://www.scanmyessay.com/favicon.ico"/>
+
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $("#exp-content").hide();
+                $("#s1").click(function () {
+                    $("#exp-content").fadeIn("slow"); //fadeIn
+                    $("#s1").hide();
+                });
+                $("#h1").click(function () {
+                    $("#exp-content").hide("slow");
+                    $("#s1").show();
+                });
+            });
+            
+        </script>
+
+        <style type="text/css">
+        	
+        	#plg-notes {
+        		margin: 15px 0;
+        	}
+        .no-underline {
+        	text-decoration:none;
+        }
+        .matched-text 
+        {
+        	text-decoration:none;
+        	background-color: #fff86a /*#febbbb*/; 	
+        }
+        #document-text a {
+        	color: #000;
+        }
+        #document-text a:hover {
+        	color: #000;
+        }        
+        .divcenter {
+        	margin: 5px 0;
+        	padding-left: 1px;
+        }
+        .coner-radius 
+        {
+        	-moz-border-radius:3px;
+        	-webkit-border-radius:3px;
+        }
+        #h1 {
+        	display: block;
+        	text-align: right;
+        }
+        
+        #main 
+        {
+        	padding: 5px 5px 20px 5px;       	
+        }
+        #menu ul li h2 
+        {
+           	margin: 5px 5px;
+           	color: #ccc;
+        }
+          
+        	.main-container-top{
+        	
+        		border: 1px solid #fcefa1; /*need removing this*/
+        		background: #fbf9ee;
+        		width: auto;
+        		height: auto;
+        		margin-right: 0;
+        		margin-top: 40px;
+        		float: none;
+        	}
+            .main-container-mid {
+        	    border: 1px solid #aaa; /*need removing this*/
+            	width: auto;
+            	height:auto;
+            	margin: 5px 0;
+            }
+            .main-container-bottom {
+            	border: 1px solid #aaa; /*need removing this*/
+            	width: auto;
+            	height:auto;
+            	margin: 2px 0;	
+            }
+            
+        	.ie-h1-fix {
+        		margin-top: 0px;
+        		padding-bottom: 3px;
+        	}
+        	
+        	.red-text {
+        		color: #c40028;
+        	}
+        	
+        	#rounded-corner
+{
+	font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif;
+	font-size: 9px;
+	margin: 1px;
+	text-align: left;
+	border-collapse: collapse;
+	
+}
+
+#rounded-corner tbody 
+{
+	width: inherit;
+	height: 300px;
+	overflow: scroll;
+	overflow-x: hidden;
+}
+
+#rounded-corner thead th.rounded-location
+{
+	/* background: #ccc;  #b9c9fe;*/
+	-moz-border-radius-topleft: 3px;
+	-webkit-border-top-left-radius: 3px;
+    width: 40%;
+   /* background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(247,247,247,1)), color-stop(50%,rgba(132,132,132,1)), color-stop(50%,rgba(132,132,132,1)), color-stop(100%,rgba(229,229,229,1))); /* Chrome,Safari4+ */
+  /* background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(226,226,226,1)), color-stop(50%,rgba(219,219,219,1)), color-stop(51%,rgba(209,209,209,1)), color-stop(100%,rgba(254,254,254,1))); /* Chrome,Safari4+ */
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(239,239,239,1)), color-stop(50%,rgba(219,219,219,1)), color-stop(52%,rgba(209,209,209,1)), color-stop(100%,rgba(242,242,242,1))); /* Chrome,Safari4+ */
+}
+#rounded-corner thead th.rounded-doc-title
+{
+    width: 30%;
+}
+#rounded-corner thead th.rounded-plg-wrd-count
+{
+}
+#rounded-corner thead th.rounded-mst-plg-pecnt
+{
+}
+#rounded-corner thead th.rounded-unq-wrds-mtch
+{
+}
+#rounded-corner thead th.rounded-unq-mtch-pecnt
+{
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(239,239,239,1)), color-stop(50%,rgba(219,219,219,1)), color-stop(52%,rgba(209,209,209,1)), color-stop(100%,rgba(242,242,242,1))); /* Chrome,Safari4+ */
+	/*background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(226,226,226,1)), color-stop(50%,rgba(219,219,219,1)), color-stop(51%,rgba(209,209,209,1)), color-stop(100%,rgba(254,254,254,1))); /* Chrome,Safari4+ */
+	/*background: #ccc;*/
+	-moz-border-radius-topright: 3px;
+	-webkit-border-top-right-radius: 3px;
+}
+#rounded-corner th
+{
+	padding: 8px;
+	font-weight: normal;
+	font-size: 13px;
+	color: #555;
+	/*background: #ccc;*/
+	/*background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(226,226,226,1)), color-stop(50%,rgba(219,219,219,1)), color-stop(51%,rgba(209,209,209,1)), color-stop(100%,rgba(254,254,254,1))); /* Chrome,Safari4+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(239,239,239,1)), color-stop(50%,rgba(219,219,219,1)), color-stop(52%,rgba(209,209,209,1)), color-stop(100%,rgba(242,242,242,1))); /* Chrome,Safari4+ */
+}
+#rounded-corner td
+{
+	padding: 8px;
+	background: #f9f9f9;
+	border-top: 1px solid #fff;
+	color: #555;
+	height: auto;
+}
+
+#rounded-corner tfoot td.rounded-foot-left
+{
+	/*background: #ccc;*/
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(242,242,242,1)), color-stop(50%,rgba(219,219,219,1)), color-stop(51%,rgba(209,209,209,1)), color-stop(100%,rgba(226,226,226,1))); /* Chrome,Safari4+ */
+	-moz-border-radius-bottomleft: 3px;
+	-webkit-border-bottom-left-radius: 3px;
+}
+#rounded-corner tfoot td.rounded-foot-right
+{
+	background: #ccc;
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(242,242,242,1)), color-stop(50%,rgba(219,219,219,1)), color-stop(51%,rgba(209,209,209,1)), color-stop(100%,rgba(226,226,226,1))); /* Chrome,Safari4+ */
+	-moz-border-radius-bottomright: 3px;
+	-webkit-border-bottom-right-radius: 3px;
+}
+#rounded-corner tbody tr:hover td
+{
+	background: #dadada;
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(255,255,255,1)), color-stop(50%,rgba(241,241,241,1)), color-stop(51%,rgba(225,225,225,1)), color-stop(100%,rgba(246,246,246,1))); /* Chrome,Safari4+ */
+	/*background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(235,241,246,1)), color-stop(50%,rgba(171,211,238,1)), color-stop(51%,rgba(137,195,235,1)), color-stop(100%,rgba(213,235,251,1))); /* Chrome,Safari4+ */
+	/*background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(255,255,255,1)), color-stop(50%,rgba(244,250,249,1)), color-stop(51%,rgba(231,245,243,1)), color-stop(100%,rgba(248,252,251,1))); /* Chrome,Safari4+ */
+	/*background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(255,255,255,1)), color-stop(50%,rgba(234,255,229,1)), color-stop(51%,rgba(209,255,199,1)), color-stop(100%,rgba(240,255,237,1))); /* Chrome,Safari4+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(255,255,255,1)), color-stop(50%,rgba(255,238,229,1)), color-stop(51%,rgba(255,219,199,1)), color-stop(100%,rgba(255,243,237,1))); /* Chrome,Safari4+ */
+}
+        </style>
+       
+    </head>
+    <body>
+        <div id="wrap">
+            
+            <div id="top">
+                <div id="top-left-tr">
+                    <a href="http://www.scanmyessay.com" title="ScanMyEssay">
+                        <span>Plagiarism Checker</span>
+                    </a> 
+                </div>
+
+                <div id="top-tr">
+                    <a href="http://www.scanmyessay.com/feedback/index.php" title="Contact us">Contact us</a>
+                    | 
+                    <a href="http://www.scanmyessay.com/universities.php">Universities</a>
+                    |
+                    <a href="http://www.scanmyessay.com/viper-background.php">History</a>
+                    |
+                    <a href="http://www.scanmyessay.com/testimonies.php">Testimonies</a>
+                    |
+                    <a href="http://www.scanmyessay.com/press/index.php" title="Viper Press">Press</a>
+                    |
+                    <a href="http://www.scanmyessay.com/about-us.php" title="About us">About us</a>
+                    |
+                    <a href="http://www.scanmyessay.com/sitemap.php" title="Sitemap">Sitemap</a>
+                    |
+                    <a href="http://www.scanmyessay.com/help/index.php" title="Help">Help</a>
+                    |
+                    <a href="http://www.ukessays.com/essay-help.php" title="Essay help" target="_blank">Essay help</a>
+                    |
+                    <a href="http://www.scanmyessay.com/rss/index.php" title="RSS">RSS</a>
+                    |
+                    <a href="http://www.scanmyessay.com/login/index.php" title="Log in">Log in</a>
+                </div>    
+            </div>
+               
+            <div id="menu">
+                <ul>
+                    <li>
+                        <h2>Plagiarism Report For 'testDoc.txt'</h2>
+                    </li>
+                </ul> 
+            </div>
+
+            <div id="main">
+                <div class="main-container-top coner-radius">
+                    <h1 class="red-text ie-h1-fix">
+                        How does Viper work.....?
+                    </h1>
+                    <a id="s1" class="no-underline" href="#">[+] Read more..</a>
+					<div id="exp-content">
+                        Viper scans your work against over 10 billion web pages and work previously 
+                        submitted to our firm. Once the scan is completed, the report delivers content 
+                        that may match these other sources, including links to the sites that contain 
+                        the same content.
+                        <br />
+                        <br />
+                        <b class="red-text">What Do the Results Mean?</b><br />
+                        If the report sends back positive matches to content found elsewhere, there is no need to panic and assume you have plagiarised your work. Instead, review the report carefully and consider the following:
+                       
+                        <ul>
+                        <li>
+                        Is the material an entire quote, a sentence, or a fragment of 4-5 words often found together? Viper will show a match where there is a string of five or more 
+                        words that are the same as your work. Even if this is not actually plagiarism, it is important that Viper does not ignore these fragments as they draw your 
+                        attention to any sentences where the writer has &#39;rephrased&#39; parts of the 
+                        original material without referencing the source.
+                        </li> 
+                            
+                        <li>If it was intended to be a quote that you were going to attribute to the source, 
+                            did you remember to properly reference it? Sometimes, Viper will identify 
+                            matching material that is available on websites, but the reference might have 
+                            been found within another source. Just because the work has content that matches 
+                            a particular website does not mean that every possible source where it appears 
+                            has to be referenced. Just make sure that at least one reference covers that 
+                        content.
+						</li>
+                        <li>Did you actually use a footnote and it was just simply not picked up by Viper? 
+                            This review is just a means of double-checking that all references have been 
+                            included.
+						</li>
+                        <li>Could Viper have just picked up a phrase that you used more than once in your 
+                            document? This may be a way to ensure that your writing is tight rather than 
+                            repetitive or relies on overly used phrases.
+						</li>    
+                        <li>Did you use too many direct quotes? Viper checks for direct quotes and delivers 
+                            an overall percentage of words it views as direct quotes. Clearly, this should 
+                            not be too high as work that relies too heavily on other material is not 
+                            &#39;original&#39;.
+						</li>
+                        </ul>
+                            <b class="red-text">A Guide on Viper Results</b>
+                            <br/>This guide explains how Viper can identify matching content when it scans your work:
+                            <br/>
+                            <br/><b class="red-text">Overall plagiarism rating 6% or less : </b>
+                            <br/>The results are that it is highly unlikely that this document contains plagiarised material. A careful check will only be necessary if this is a lengthy document. For example, a 6% result within a 15,000 word essay would be of concern because it could mean that direct quotes are too lengthy or there are too many places where a reference was not listed.<br/>
+                            <br/><b class="red-text">Overall plagiarism rating 6% - 12% : </b>
+                            <br/>The results are that there is a low risk that the document contains any plagiarised material. Most of the matching content will probably be fragments. Review your report for any sections that may not have been referenced properly.<br/>
+                            <br/><b class="red-text">Overall plagiarism rating 13% - 20% : </b>
+                            <br/>The results are that there is a medium risk that the document contains any plagiarised material. There may be sections that match websites so it is important to check that proper credit was attributed to the other sources. The scan may not have detected quotation marks or footnotes that were used. For example, if an opening quotation mark was included but there was not a closing quotation mark, then this could explain the higher result. <br/>
+                            <br/><b class="red-text">Overall plagiarism rating 21%+ : </b>
+                            <br/>The results are that there is a high risk that the document contains plagiarised material. If the overall rating is this high, you need to check your report very carefully. It may be that there are a lot of matching fragments and the software has not identified all direct quotes , but it is critical that you go through the entire document and address every phrase or fragment that the scan has flagged to reduce this percentage.<br/>
+                            <a id="h1" class="no-underline" href="#">[-] hide</a>
+                        
+                    </div>
+                </div>
+                <div class="main-container-mid coner-radius">
+                    <table id="rounded-corner" summary="URL found to be copied">
+                        <thead>
+                            <tr>
+                                <th scope="col" class="rounded-location">Location</th>
+                                <th scope="col" class="rounded-doc-title">Title</th>
+                                <th scope="col" class="rounded-plg-wrd-count">Words Matched</th>
+                                <th scope="col" class="rounded-mst-plg-pecnt">Match (%)</th>
+                                <th scope="col" class="rounded-unq-wrds-mtch">Unique Words Matched</th>
+                                <th scope="col" class="rounded-unq-mtch-pecnt">Unique Match (%)</th>
+                            </tr>
+                        </thead>    
+                        <tfoot>
+                            <tr>
+                                <td colspan="5" class="rounded-foot-left"><em>Documents found to be plagiarised</em></td>
+                                <td class="rounded-foot-right">&nbsp;</td>
+                            </tr>
+                        </tfoot>
+                        <tbody id="ajaxtable">
+                            <tr><td><a href=0 target="_blank">0</a></td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+                        </tbody>
+                    </table>
+                    
+                </div>
+                <div id="plg-notes" class="divcenter red-text">
+                       <b> Matching Content: </b> <b style="color: green"> No Plagiarised Text Found</b>
+                    </div> 
+                <div class="main-container-bottom coner-radius">
+                    <div id="document-text" class="divcenter">
+                        <h2>Master Document Text</h2>
+                        <!--<a href="" class="matched-text"> xyz </a> -->
+                        <p>For  practical  reasons,  in  this  paper  we 
+selected  a  subset  of  the  PAN  corpus:  the  first 
+1,000  suspicious  documents,  along  with  all 
+11,147  source  documents.  Since  our  goal  is  to 
+investigate  external  plagiarism  of  English  texts, 
+all intrinsic and translated plagiarism cases were 
+excluded from the dataset. We therefore removed 
+186  cases  from  the  subset  of  1,000  suspicious 
+documents  and  731  non-English  cases  from  the 
+</p>
+                        
+                        
+                    </div>
+                    
+                </div> 
+            </div>
+
+            <div id="footer">
+                <div id="footermenu">
+                    <div id="col1">
+                        <ul>
+                            <li>
+                                <a title="Plagiarism detection software" href="http://www.scanmyessay.com/plagiarism-detection-software.php">Plagiarism Detection Software</a>
+                            </li>
+                            <li>
+                                <a title=" Plagiarism Test" href="http://www.scanmyessay.com/plagiarism-test.php">Plagiarism Test </a>
+                            </li>
+                            <li>
+                                <a title="Plagiarism Detector" href="http://www.scanmyessay.com/plagiarism-detector.php">Plagiarism Detector</a>
+                            </li>
+                            <li>
+                                <a title="Detect Plagiarism" href="http://www.scanmyessay.com/detect-plagiarism.php">Detect Plagiarism</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div id="col2">
+                        <ul>
+                            <li>
+                                <a title="Essay Checker" href="http://www.scanmyessay.com/essay-checker.php">Essay Checker</a> 
+                                | <a href="http://www.scanmyessay.com/free-check-for-plagiarism.php">Free Check for Plagiarism</a>
+                            </li>
+                            <li>
+                                <a title="Free lesson plans" href="http://www.scanmyessay.com/lesson-plans.php">Lesson plans</a>
+                            </li>
+                            <li>
+                                <a title="Avoid plagiarism" href="http://www.scanmyessay.com/avoid-plagiarism.php">Avoid Plagiarism</a>
+                            </li>
+                            <li>
+                                <a title="Plagiarism Check" href="http://www.scanmyessay.com/plagiarism-check.php">Plagiarism Check</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div id="col3">
+                        <ul>
+                            <li>
+                                <a title="Plagiarism prevention software" href="http://www.scanmyessay.com/plagiarism-prevention.php">Plagiarism Prevention</a>
+                            </li>
+                            <li>
+                                <a title="Turnitin" href="http://www.scanmyessay.com/turnitin.php">Turnitin </a> | <a href="http://www.scanmyessay.com/check-for-plagiarism-free.php">Check for Plagiarism Free</a>
+                            </li>
+                            <li>
+                                <a title="Editing services" href="http://www.scanmyessay.com/essay-marking/index.php">Editing Services</a>
+                            </li>
+                            <li>
+                                <a title="Free Scanner Software" href="http://www.essaycoursework.com/coursework-writing.php">Coursework writing</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div id="footerbottom">
+                    <p>
+                        Copyright © 2012 All Rights Reserved. 
+                        <a href="http://www.scanmyessay.com">Scan My Essay</a> 
+                        - Free Plagiarism Scanner, Checker and Detection Tool.  
+                        Viper and ScanMyEssay.com are trading names of Angel Business Limited, 
+                        a Company registered in England and Wales with Company Registration No: 07344835, 
+                        The Loft, 3 Plumptre Street, The Lace Market, Nottingham NG1 1JL | 
+                        <a href="http://www.scanmyessay.com/viper-keygen-crack.php">Warning - Viper Keygen / Viper Crack</a>
+                    </p>
+                    <p>
+                        Please note that by using ScanMyEssay.com, VIPER and any other  software or resources on the ScanMyEssay Website, you are signifying  your agreement
+                        to our <a href="http://www.scanmyessay.com/terms.php">terms and conditions</a>, and our <a href="http://www.scanmyessay.com/privacy-policy.php">privacy policy</a> | <a href="http://www.scanmyessay.com/sitemap.xml">XML sitemap</a> 
+                        | <a href="http://www.scanmyessay.com/ror.xml">ROR</a> 
+                        | <a href="http://www.scanmyessay.com/urllist.txt">TXT</a>
+                        | <a href="http://www.scanmyessay.com/sitemap.html">HTML</a>
+                        | <a href="http://www.scanmyessay.com/sitemap.php">PHP</a> | <a href="http://cn.scanmyessay.com">剽窃检查</a>
+                        | <a href="http://es.scanmyessay.com">Verificador de plagio gratuito</a> 
+                        | <a href="http://fr.scanmyessay.com/">Détecteur de plagiat gratuit</a> 
+                        | <a href="http://in.scanmyessay.com/">Viper साहित्यिक चोरी जांचने का एक निशुल्क साधन...</a>
+
+                    </p>
+                </div> 
+            </div>
+
+        </div>
+         
+    </body>
+</html>

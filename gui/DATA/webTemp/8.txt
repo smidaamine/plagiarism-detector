@@ -1,0 +1,695 @@
+IEEE TRANSACTIONS  ON AUTOMATIC CONTROL, VOL. 41, NO.  8, AUGUST  1996 
+
+1227 
+
+A Lower Bound for the Correct Subset- 
+Selection Probability and Its Application 
+to Discrete-Event System Simulations 
+
+Chun-Hung  Chen 
+
+Ahstruct4rdinal optimization concentrates on finding a subset of good 
+designs, by approximately evaluating a parallel set of designs, and reduces 
+the  required simulation time dramatically for  discrete-event simulation 
+and optimization. The estimation of the confidence probability (CP) that 
+the selected designs contain at least one good design is crucial to ordinal 
+optimization. However, it is very  difficult to estimate this probability in 
+DES  simulation, especially for  complicated DES  with large  number of 
+designs. This  paper  proposes two  simple lower  bounds for  quantifying 
+the confidence probability. Numerical testing will be presented. 
+
+I.  INTRODUCTION 
+
+To  efficiently manage  and  operate large man-made  systems such 
+as  communication networks, traffic  systems, and  automated manu- 
+facturing plants, it  is often necessary to  apply extensive simulation 
+to study their performance since no closed-form analytical solutions 
+exist  for  such  problems.  Collectively,  these  types  of  systems  are 
+known as discrete-event systems (DES’s) [I 11. Unfortunately, using 
+simulation to  solve such problems can be both  expensive and time 
+consuming  due  to  their  massive  search  space  and  their  evolution 
+in  time  according  to  complex  man-made  rules  and  the  influence 
+of  random  occurrences. In  industry,  with  pressure  to  meet  certain 
+system specifications and only a limited budget to carry out necessary 
+simulations, the limitations of  traditional simulation technology can 
+either delay a project or force it to go over budget. 
+
+Traditional optimization approaches focus on iteratively searching 
+the design universe and converging to the best  one. However, these 
+approaches can be time consuming. Even the simulation of  a single 
+design can be expensive, because accurately estimating performance 
+measures  usually  requires  simulation  until  steady  state  in  DES’s. 
+Thus,  finding the  best  design  is  often  infeasible  for  large  DES’s. 
+Instead of  insisting on picking the best design, ordinal optimization 
+[12]  concentrates  on  finding good,  or  better,  designs  and  reduces 
+the required simulation time dramatically. Ordinal optimization has 
+been applied on a ten-node network [15],  where it is shown that we 
+can isolate a good design with high probability with relatively short 
+simulations instead of long simulations. They also demonstrate many 
+orders of  magnitude of  speedup. 
+
+A  crucial  issue  to  apply  ordinal  optimization  is  the  ability  of 
+knowing when we are confident or satisfied enough with the ordinal 
+results, e.g., a good subset has been determined with high probability. 
+In this paper, we quantify the confidence or satisfaction level using 
+a  certain  confidence  probability  (CP).  First,  we  define  CP  as  the 
+probability that at least one of  the selected designs is a good design. 
+Alternatively, we define CP as the probability that the observed best 
+design is very close to the true best design. Thus, we stop simulations 
+when the  CP  is  sufficiently large. 
+
+Manuscript received  December 8,  1993; revised January  15, 1995. This 
+work  was  supported  in  part  by  the  NSF under  Grants CDR-8803012 and 
+EID-9212122, ONR  Contract N00014-89-J-1023, Army  Contracts DAAL- 
+03-92-G-0115 and DAAL-03-91-G-0194, and the University of Pennsylvania 
+Research Foundation. 
+
+The author is with the Department of  Systems Engineering, University  of 
+
+Pennsylvania, Philadelphia, PA  19104-63 15 USA. 
+
+Publisher Item Identifier S 0018-9286(96)04375-9. 
+
+Goldsman and Nelson [SI  provide an excellent survey on current 
+approaches  (e.g.,  [9],  [lo],  [13])  to  estimating  such  confidence 
+probabilities. In  addition, [2] gives  a  systematic and more  detailed 
+discussion  on  this  issue.  Those  approaches  are  mainly  suitable for 
+problems having a small number of  designs (e.g.,  [SI  suggests 2-20 
+designs).  For  real-life  DES  problems,  the  number  of  designs  can 
+grow  up  to  numerous  orders  of  magnitude  easily,  especially  for 
+the  application problems of  ordinal optimization. In  this paper, we 
+propose a simple way to estimate such a CP. Our approach is to find 
+a simple lower bound of  CP and use this to approximate the CP. We 
+call this approximated confidence probability (ACP). Since ACP is a 
+lower bound of CP, if ACP becomes sufficiently large in simulations, 
+we  are  certain  that  CP is  large  enough.  Although how  close  ACP 
+is  to  CP  is  still  an  ongoing  research  topic,  numerical  testing  has 
+demonstrated that ACP can provide reasonably good approximation 
+to  CP. 
+
+In Section 11, we will define the CP and find a lower bound for it. 
+We  define another CP  and also find  an  appropriate lower bound  in 
+Section 111. In  Section IV, we present a  simple way  of  constructing 
+the  posterior  distribution to  estimate  the  CP’s.  Section V  contains 
+numerical  testing  results. 
+
+11.  ESTIMATION OF CONFIDENCE PROBABILITY FOR DES SIMULATIONS 
+
+Denote 
+n 
+T 
+
+- j, (t) 
+J , ( T )  
+
+J3 
+
+the  total number of  designs; 
+the  length  of  simulation, the  number  of  replication, or 
+the total number of  samples; 
+the tth sample of the performance measure of - design j ;  
+the  sample  mean  of  design  j ,   namely,  J , ( T )   = 
+(1/T)% 
+the performance measure, or more specifically, the mean 
+performance measure of design j ,  i.e., the mean of 5, ( t ) .  
+
+J 3 ( t ) ;  
+
+Assume  that 
+1)  j3(t) is  i.i.d.  for  all  t. 
+2)  The  simulations fpr designs i  and j , i  # j ,  are independent. 
+
+Thus,  J z ( t )  and J3(t) are  independent. 
+
+For steady-state simulation, the sample j, (t) may not be independent 
+of  j , ( s )   for  s # t. One possible way  is to place the  “raw” data in 
+a few large batches and work with these few batches as if they were 
+independent [l]. As the strong law of large numbers, with probability 
+one 
+
+- J , ( T )  + J 3 ,   as  T  -+ 00. 
+
+This  means  that the  sample mean  is  asymptotically close to  J3 as 
+the  number  of  samples  increases.  In  practice,  we  cannot  perform 
+an  infinitely  long  simulation  or  an  infinite  number  of  separate 
+replications. Without infinitely long simulations or infinite number of 
+simulations replication, the sample mean 7, ( T )  is an approximation 
+to J 3 .  We refer to the sample mean 2J ( T )  from one finite simulation 
+experiment  as  an  observed  performance  measure  for  a  particular 
+design’s  simulation. Let  a3  be  the  index  of  the  design  having the 
+jth largest actual  performance measure and  o3  be  the index of  the 
+design  having the jth largest observed  performance measure. With 
+these  notations, we  have 
+
+The traditional optimization approaches are to find design al. (With- 
+out  loosing generality, we  only consider maximization problems in 
+
+0018-9286/96$05.00  0 1996 IEEE 
+
+1228 
+
+IEEE  TRANSACTIONS  ON AUTOMATIC CONTROL,  VOL  41, NO  8, AUGUST  1996 
+
+Fig.  1.  A five-design example of  the p( j,) for j  = 1,. .  , 5  
+
+this paper.) However, even the simulation cost for a good estimation 
+of  5,  could be very high, especially for complicated systems. Instead 
+of  insisting  on  picking  the  best  design,  ordinal  optimization  [12] 
+concentrates on finding good enough designs and reduces the required 
+simulation time dramatically. Comparing the  observed performance 
+measured  at  short  simulation length T ,  we  can  select the  observed 
+best design (01) or the observed top-r  designs (01,02,  , . . . , or). The 
+estimation of  the probability that  at least one of  the  observed top-r 
+designs actually belongs in top-k is crucial to ordinal optimization. 
+There  are two  statistical approaches giving mathematical models 
+of  J,  [ 3 ] ,  [6], [14] for illustrating its uncertainty. One is the classic 
+approach which treats 5, as a deterministic but unknown number and 
+constructs a confidence interval which contains the unknown number 
+with  some  probability.  On  the  other  hand,  the  Bayesian  approach 
+treats  J3  as  a  random  variable.  In  this  approach,  J3  has  a  prior 
+distribution which  describes the  knowledge or the  subjective belief 
+about 5, before any sampling. The posterior distribution is updated 
+after we  observe the  samples { j ,  (t), t = 1,. . . , T } .  The posterior 
+distribution p ( J J  l{j, (t), t  = 1,. . . , T } )  summarizes the  statistical 
+properties of 5, given the prior knowledge and sampling information. 
+Although  most  of  the  existing  simulation  approaches follow  the 
+classical models,  in  this  paper  we  adopt the  Bayesian  approach as 
+our  mathematical  model.  Our  purpose  is  to  provide  an  alternative 
+way  of  analyzing the CP rather than to replace the existmg classical 
+approaches. The reason for adopting the Bayesian approach is that it 
+is easier to derive and explain the lower bound of  the CP defined in 
+this paper. It will be clearer when we go into more detail later. 
+
+In  the  Bayesian  approach,  when  simulation  stops,  the  statis- 
+tical  properties  are  described  by  the  posterior  distributions.  We 
+an  estimate  the  probability  that  J ,   is  in  some  specific  region, 
+.,  Pr{J,>Ol{j,(t),:  =  l,...,T}}, or  compare  two  designs, 
+e.g.,  Pr{J,  - J3 >Ol{J,(t),j,(t),t = l,...,T}) .  For  notational 
+simplicity, we  denote j ,  as the posteriori 
+
+J, I { j ,  (t) , t = 1, ' ' ' , T } .  
+
+Namely,  Pr{j,  > 0)  represents Pr{J,  > Ol{j,(t),t = 1,. . . , T } } .  
+The  posterior  hstribytion  p ( j j )  illustrates  what  value  5, may  be, 
+based  on  samples  (5, (t), t  = 1, . . . , T)  and the  prior  knowledge. 
+Fig.  1 illustrates a  five-design example. 
+
+In  Section IV,  we  will  present  a  feasible  way  to  construct  this 
+posterior  distribution p ( j , )   for  DES  simulation.  Here  we  assume 
+p(<,)  is  available. Based  on the  probability distributions p ( j J )  for 
+all designs, we will develop a simple way to quantify the confidence 
+level.  Define the  CP 
+
+CP1 = Pr{At  least one of  the observed top-r 
+
+designs actually belongs in top-L} 
+
+and  the  ACP 
+
+A C P l  
+
+Pr{jol > jo,}. 
+
+j=r+k 
+
+The "1"  is used to distinguish the definition of  CP and ACP from 
+another  definition in  Section 111.  In  general,  CP1  is  very  difficult 
+
+to  estimate, especially when the  number of  designs n  is  large. We 
+propose  using  the  lower  bound  ACPl  to  approximate  CPI. Since 
+ACPl  is a lower bound of  CP1, if  ACPl becomes sufficiently large 
+in simulations, we are certain that CP1 is large enough. To show that 
+ACPl  is a lower bound for CP1, we need the following lemmas. 
+
+Let X1,X2,...,Xn 
+are mutually  independent. 
+Lemma I :   Pr{X1>  X ,  n Xi > X, j  2 Pr{X1>  X ,  j  P r { X i >  
+
+b e n  random variables and X2,X3,...,Xn 
+
+X,}. 
+P r { X i >  X ,  n Xi > X , }  
+
+Proof: 
+
+= S S P r { X i > K i n x l > x , l x , = a   &  X ,  
+= b}fxz,x3 ( a ,  b )  da db  ( f  is the density fun.) 
+= J" Pr{Xl > X ,  n x1 > X, I X ,  = a  & X, 
+= 11 Pr{X1>  a n XI > b}fx,(a) 
+= b}fx,(a)fx, ( b )  da db 
+2 // P r { X i >   a> P r { X i >  bjfx,(a) 
+
+. fx, ( b )  da db 
+
+(independence) 
+
+. fx, ( b )  da db 
+n 
+
+P r ( X l > a  
+
+(because 
+MIN[Pr{Xi> a } ,  
+Pr{Xi  > a }  Pr{X1>  b } )  
+
+P r { X l >  b}] 
+
+= 1 P r { X i >   a}fx,(a) da .  P r ( X i >  b}fx, ( X ,  = b )  db 
+
+s 
+
+X1>b} 
+
+= Pr{X1> X ,  j  Pr{X1 > X ,  j. 
+2 ny=T+k. 
+Lemma2:  Pr{Xi  >Xr+k,Xr+k+l,...,Xn} 
+
+Proof: 
+
+- - 
+2 
+
+U 
+
+Pr{X1  > X J }  = Pr(X1 >Xr+k,Xr+k+l,"',Xn} 
+
+= Pr{X1>  Xr+k  n Xi 
+
+> m a [ X r + k + l ,  ' '  , Xn]} 
+2 P r { X i >   X,+k}  Pr{Xi 
+
+(According to Lemma  1). 
+
+In  the  same  way 
+P r  1x1 > max [ X r + ~ ,  Xr+k+l,. . . , X,]} 
+2 Pr{X1>  X r + k }   P r  {Xi > Xr+k+i} 
+. P r  {Xi > max [ X r + k + z , .   . . , X,] j 
+................................... 
+2 P r  {Xi > X,+k  j  Pr {Xi > X r + k + 1   j 
+. P r  {Xi > X,+k+z}. . . P r  {Xi > Xn}. 
+
+U 
+Lemma 3:  Let r  and IC be positive integers smaller than n. Define 
+
+two  events 
+
+S r , k   =(max(Xi,Xz,...,X,) h a s r a n k 2  kj 
+R, = {Xi > max(X, 
+If T + k  5 n, Pr{ S r , k }   2 Pr{ R 
+Proof:  Consider T + k  5 n. We will show that Sv,k 2 RT+k = 
+{Xi > max(Xr+lc,Xr+k+i,... ,Xn)}. 
+Let X ,   = max(Xi,Xz,...,X,) . Thus, X,  2 XI 
+
+Xi > max(X,+k,  X r + ~ + l , .  
+
+. . , X,) 
+
+IEEE TRANSACTIONS ON AUTOMATIC CONTROL, VOL.  41, NO.  8, AUGUST  1996 
+
+1229 
+
+implies  that 
+
+and  the  ACP 
+
+n 
+
+Hence 
+X,  > max(X1, XZ, . . . , X,-I,  X,+I,.  . * ,  X,, Xr+k,. . *  , X,) 
+which implies that there are at least ( r  - l ) + ( n - r   - k + l )   = ( n - k )  
+elements which are  smaller than X,.  Because the  total number  of 
+random variables is n, there  are no  more than n - ( n  - k)  - 1 = 
+k  - 1 elements which are greater than X,.  The rank  of  X, 
+is at 
+is  defined  as  max(XI,Xz,...,X,), we  have 
+least  k .   Since  X, 
+S r , k   2 R,+k,  and therefore Pr{%,k}  2 Pr{R,+k}. 
+On  the  other  hand,  if  r  +  k > n ,   we  would  show  that 
+“max(Xl,Xg,  ... ,Xr) has  rank  2 k” 
+is  always  true.  Since 
+X,  = max(X1,Xg,...,Xr) 
+
+X,  > max(X1, X z ,  . . . , Xm-1,  X,+i,.  . . , X r ) .  
+
+There are at least r - 1 elements which are smaller than X,.  Thus, 
+there are no more than n - ( r  - 1) - 1 = n - r  elements which are 
+greater than X,.  Since r + k > n, n - r  is smaller than k .  The rank 
+13 
+of  X, 
+Theorem 1:  If  r + k  5 n, then CP1 2 ACP1, i.e., 
+
+is at least k. Therefore, Pr{Sr,k} = 1.0. 
+
+,=2 
+
+For maximization problems, we  are interested in /3  < 100%. The 
+“2” is used  to  distinguish this  definition of  CP and ACP  from the 
+preceding definition. Using the  same ideas which we used to derive 
+the ACP1, we can also show that ACP2 is a lower bound of  CP2. 
+Lemma 4:  Pr{X1>  max[Xz, Xs,. . . , X,]}  2 II,”=2  Pr{XI> 
+x, 1. 
+0 
+Theorem 2:  C P 2  2 ACP2, i.e.,  Pr{The  true performance of  the 
+fracticn of the performance 
+
+Proof:  Apply Lemma 2 and set r  = k = 1. 
+
+observed best design is not worse than 
+of  the  true best  design} 2 
+
+Pr{Jol  > pJo,}. 
+
+Proofi 
+
+CP2 = Pr{The  performance of  the observed 
+
+best design is not worse than p fraction 
+of the performance of  the true best design} 
+= pr{Jol  > p . max[jol , Jo,, j o 3 , .  . . , c?o,l> 
+= Pr{jo, > P  . m a x [ ~ , , , ~ ~ ~ , . . . , j ~ ~ ] } .  
+Apply Lemma 4 and replace X,  with P j o ,  for j  = 1,. . . , n, we 
+
+x
+
+x
+
+ 
+
+Pr{At  least one of  the observed top-r  designs 
+
+actually belongs in top-k} 
+
+have 
+
+Pr{Jol  > P  . max[Jo, , Jo,, . . . , Jon, I) 
+n 2 n[ PI-{~,,, > PJo,} = ACPZ. 
+
+,=2 
+
+0 
+
+otherwise,  C P 1  = 1.0. 
+Proof:  If r + k 5 n, we have the equatio? shown ?t the bottom 
+of  the page. If  r + k > n, Pr(max(j.,  , J,, , J,,  , . . . , J,,)  has rank 
+0 
+2 k} = 1.0 and therefore C P 1  = 1.0. 
+
+111.  ANOTHER CONFIDENCE PROBABILITY 
+
+In the preceding section, the confidence probability CP1 is defined 
+as the probability that at least one of  the selected designs is a good 
+design, or more specifically, the probability that  at least one of  the 
+observed top-r  designs actually belongs in top-k.  A design is good 
+if  it has high rank. On the other hand, a good design can be defined 
+as a design whose performance is very  near the performance of  the 
+best design. Note that even if a design has high rank, its performance 
+may still be far from the best. However, designs having low rank may 
+still have performances very  close to  the best.  Users may  be  more 
+concerned with true performance instead of  rank. In this section, we 
+will define another CP and present a lower bound for it. Define the CP 
+
+CP2 G  Pr{The  true performance of the observed best 
+
+design is not worse than /3  fraction of 
+the performance of  the true best design} 
+
+We have shown that ACP2 is a lower bound for CP2. It is interest- 
+ing  that  the  formula  of  ACP2  is  very  similar  to  ACP1,  although 
+the  definition  of  CP2  is  quite  different  from  CPl.  In  particular, 
+consider  the  case  that  r  =  k  =  1 and  p  =  100%,CPlr,k,~ 
+equals  CP2p=100%. ACPl,=k=I  also  equals  ACP2p=loO%  The 
+two lower bounds are the same in this case. This illustrates that our 
+lower bounds could be tight lower bounds, at least none of these two 
+bounds  dominates  another. 
+
+Iv.  CONSTRUCTION OF THE  POSTERIOR 
+DISTRIBUTIONS FOR  DES  SIMULATIONS 
+
+This section will present an effective way to construct the posterior 
+distribution p ( J J ) .  Note that  the  approach presented in  this  section 
+is  not  the  unique  way  to  accomplish  this  purpose.  Suppose  no 
+information is  known  about the  performance measure of  J,  before 
+we  observe  any  sampling.  Therefore,  we  assume  that  the  prior 
+distribution on J3 is N ( 0 ,  U’),  where v  is an extremely large number. 
+Extremely large variance means that we have almost no  idea about 
+J3 before doing simulation. In addition, we assume that the samples 
+J 3 ( t ) ,  for j  = 1,. . . , n, are normally distributed 
+“,d. 
+
+j 3 ( t )  
+
+C P 1 =  
+L 
+2 
+
+has rank 2 k }  
+
+Pr{At least one of  the observed top-r designs actually belongs in top-k} 
+P r { m a x ( ~ o l , ~ ~ , , , ~ 0 3 , . . . , ~ o , )  
+Pr{jol > max(jo,+k, L?oT+k+l,.  . . , Jon)}  (apply Lemma 3 and replace X ,  with j., , note 
+fi pr{jol > jo3 } 
+
+that oJ for all j  are known when we stop 
+simulation and rank the sample means.) 
+
+(apply Lemma 2 and replace X ,  with joJ ) 
+
+2 
+
+j=r+k 
+
+1230 
+
+IEEE  TRANSACTIONS  ON AUTOMATIC CONTROL,  VOL.  41, NO.  8, AUGUST  1996 
+
+Unifl 1,7] 
+
+Unifl 1,7] . .  
+
+C1: Unifl2 
+C2: Exp(0. 
+
+Flg. 2  Ten-node  network  wlth  priority,  intemption,  and  shared  server 
+
+ (t) is as follows. 
+The reason that we assume normal distribution for j
+If  we treat the difference between jj ( t )  and J j  as the sampling noise, 
+this  noise  is 
+
+j
+
+[jj(t) - Jj] - N(0,o;). 
+
+Therefore, the noise is normally distributed which is the usual way 
+to  describe  noises.  Normal  assumption  can  also be  justified  when 
+the  batch-means  method  is used  to  obtain  samples for  steady-state 
+simulation. 
+
+Since the family of normal distributions is itself a conjugate family 
+of normal prior distributions, the posterior distribution conditional on 
+the observations { j j ( t ) ,  t = 1,. . . , T }  is  still a normal distribution 
+with 
+
+variance = 
+
+0;  ’ v2 
+P;  + T . V’ 
+
+Since v  is very large, the mean and variance can be approximated by 
+
+4 
+T 1 
+-  j,(t)  and  - T 
+T 
+t=l 
+
+respectively. Thus,  the  posterior 
+
+For the  derivations of  the mean and variance, please refer to  [3] or 
+other statistics books. From these posterior distribution expressions, 
+we  see  that  we  become  more  and  more  confident  of  the  sample 
+mean as the  number of  samples T increases. Another advantage of 
+the Bayesian model is that if  any knowledge about the performance 
+measures before simulation is available, such knowledge can be easily 
+represented in  this  model. 
+Note  that,  althougb  we-had  some  normal  assumptions here,  the 
+product form of  Pr{J1 > J J }  for ACP is not restricted within normal 
+distributions. Therefore,  the  ACP  formula  is  still  valid  even  if  we 
+release the previous normal assumption. In practical simulations, the 
+variance 032 
+is usually unknown. The t-distribution is a more accurate 
+model  to  describe  tbe  posterior  distribution.  For  easy  explanation 
+and implementation of  computer code, we use the normal model and 
+approximate cr?  using the  sample variance 
+
+in  the  following numerical testing. 
+
+V.  NUMERICAL TESTING 
+
+We consider a ten-node network (please see Fig. 2). Such a network 
+could be the model for a large number of real-world systems, such as a 
+manufacturing system, and a communication or a traffic network. For 
+details about this example, please refer to [5] and [15]. We  consider 
+the  problem  of  optimally allocating 22 buffer  units  among the  ten 
+different nodes for maximizing the throughput. Priority, interruption, 
+blocking, and mullet-classes are included in this network. We denote 
+the buffer size of node z  by B, . We set some constraints for symmetry 
+reasons: Bo  = B1  = Bz  = BS , Bq  = Bs , and Bs  = 6’7.  In addltion, 
+B ~ & B s  2 1. These constraints limit our search space to n = 1000 
+different configurations. 
+
+The standard clock method [5], [16], which is an efficient technique 
+for DES simulation, is used to simulate this system. As in [15], a good 
+approximation to  the  steady-state performance  measure  J3 of  this 
+problem is obtained at around 4 500 000 clock ticks (for the standard 
+- 
+clock method, one event is generated at each clock tick), i.e., J ,  E J ,  
+(4 500 000). The actual order a1 , a2, . . . , UIOOO  can be obtained. 
+
+We  first conduct experiments with simulation length  10 000 clock 
+ticks. To  get  reasonable  estimates  of  CP1  and  CP2,  we  repeat  the 
+simulations 500 times. Each run has a different random seed, and let 
+the indexes of  the ordered observed performance measures in the ith 
+run  be  ol(i),oz(i),... ,olooo(i).  We  estimate  CP1  and  CP2  using 
+the  following  formulas: 
+
+= (the total number of  runs that the intersection of 
+
+. . , o,(z)} 
+
+and  { U I , U ~ ; .  . , a k }  is not 
+
+Estimation of  CP1 
+
+{ 0 1 ( z ) , 0 2 ( a ) , .  
+empty) /500 
+Est~mation of  CP2 
+
+= (the total number of  runs that 
+
+Jol(t)  > PJa1)/500. 
+
+In  the  ith  run,  we  compute  Pr{jol(z) >jo,(z,} 
+and  Pr{j,,l(zl 
+> P j o o 3 ( z ) } ,  for  j  =  2 , . . .  ,n, using  simulation  data.  And  then 
+we  calculate ACPl  and ACPZ.  The  “average ACP1”  and  “average 
+ACPT denote the averages of  500 estimations of  ACPl  and ACP2, 
+respectively. In addition, we then repeat the above testmg for simula- 
+tion length 30000 clock ticks. Tables I and I1 contain the simulation 
+results which demonstrate that ACPl  is a lower bound for CP1 and 
+that ACP2 is a lower bound for CP2. In some cases, ACP may be too 
+conservative if  used to  approximate CP. Nevertheless, ACPl  is  not 
+too far away from CP1 when r  and k  are not too small. ACP2 could 
+be an approximation to CP2 when /3  is not very close to  100%. 
+
+In  particular,  from  Table 11,  if  Pr{the  true  performance  of  the 
+observed best design is not worse than 98.5% of  the performance of 
+the true best design} = 99% is satisfactory, we can stop simulation 
+at  30000  clock  ticks.  The  time  savings  factor  is  150. This  again 
+demonstrates the  advantage of  ordinal optimization. 
+
+IEEE TRANSACTIONS  ON  AUTOMATIC CONTROL, VOL. 41, NO.  8, AUGUST  1996 
+
+1231 
+
+. 
+
+THE ESTIMATION OF CP1 AND  ACPl AT  10000 AND  30000 CLOCK TICKS 
+
+TABLE I 
+
+. 
+
+confidence level, instead of equally increasing the simulation lengths 
+for all designs, can we smartly allocate the computing budget? More 
+specifically, if  simulations are performed on  a  sequential computer 
+and the computation cost is  approximated by  TI + TZ + . . . + T,, , 
+we  want  to 
+
+min  (TI + TZ +. . . + Tn), s.t. ACP 
+
+TI,  ,Tn 
+
+2 (a satisfactory level). 
+
+Solving this problem for DES with large n remains to be investigated, 
+while preliminary results in [4] show that using this idea to smartly 
+allocate computing budget can further reduce the total computation 
+time by about ten times for the ten-node example shown in Section V. 
+
+ACKNOWLEDGMENT 
+
+THE ESTIMATION OF cP2 AND  ACP2 AT  10 000 AND  30 000 CLOCK  TICKS 
+
+TABLE  I1 
+
+The author would like to thank Prof. Y.  C.  Ho, Harvard  Univer- 
+sity’s  DEDS  group,  Prof.  L.  Dai,  and  the  anonymous, referees  for 
+their helpful suggestions and valuable comments. 
+
+REFERENCES 
+
+J.  Banks and J.  S.  Carson, 11,  Discrete-Event System Simulation.  En- 
+glewood Cliffs, NJ Prentice-Hall, 1984. 
+R.  E.  Bechhofer, T.  J.  Santner, and  D.  M.  Goldsman,  Design  and 
+Analysis of Experiments for Statistical Selection, Screening, and Multiple 
+Comparisons.  New  York: Wiley,  1995. 
+Waclsworth, 1990. 
+G. Casella and R. L. Berger, Statistical Inference. 
+C.  H.  Chen,  “An  effective  approach to  smartly allocate computing 
+budget for discrete event simulation,’’ in Proc. 34th IEEE Conf  Decision 
+Contr.,  Dec.  199.5, pp. 2598-2605. 
+C. H. Chen and Y. C. Ho, “An approximation approach of the standard 
+clock method for general discrete event simulation,” IEEE Trans. Contr. 
+Syst.  Technol., vol. 3., no. 3., pp. 309-317,  Sept. 1995. 
+M.  H.  DeGroot,  Probability  and  Statistics.  New  York  Addison- 
+Wesley,  1986. 
+P. Glasserman and P. Vakili, “Correlation of uniformized Markov chains 
+simulated in parallel,” in Proc. Winter Simulation Con$, Dec. 1992, pp. 
+412-419. 
+G.  Goldsman  and  B.  L.  Nelson,  “Ranking, selection, and  multiple 
+comparison in computer simulation,” in Proc.  1994 Whter Simulation 
+Con$, Dec.  1994, pp.  192-199. 
+G. Goldsman, B. L. Nelson, and B. Schmeiser, “Methods for selecting 
+the best system,” in Proc. 1991 Winter Simulation  Conf, pp.  177-186. 
+S.  S.  Gupta  and  S.  Panchapakesan, Multiple  Decision  Procedures: 
+Theory and Methodology  of Selecting and Ranking Populations.  New 
+York  Wiley,  1979. 
+Y .  C.  Ho,  Ed., Discrete  Event  Dynamic  Systems.  New  York:  IEEE 
+Press,  1991. 
+Y.  C.  Ho,  R.  S.  Sreenivas, and  P.  Vakili, “Ordinal  ioptimization  of 
+DEDS,” J. Discrete Event Dynamic Syst., vol. 2, no. 2, pp. 61-88,  1992. 
+A. M. Law and W. D. Kelton, Simulation Modeling and Analysis.  New 
+York: McGraw-Hill, 1991. 
+P.  M.  Lee, Bayesian  Statistics:  An Introduction.  New  York:  Oxford 
+Univ. Press,  1989. 
+N. T. Patsis, C. H.  Chen, and M.  E. Larson, “SIMD parallel discrete 
+event dynamic system simulation,” IEEE Trans Contr. Syst. Technol., to 
+appear. 
+P. Vakili,  “A standard clock technique for efficient simulation,” Oper- 
+ations Res. Lett.,  vol.  10, pp. 445452, 1991. 
+
+In this testing, the  standard clock method is used to  simulate our 
+example  because  it  is  more  efficient [5], [16],  although  it  makes 
+sampling  data  correlated. However,  [7]  shows  that  the  correlation 
+among designs by  using the  standard clock method is positive. This 
+implies the CP’s in Tables I and I1 are larger than those in independent 
+cases, and our ACP’s will obtain even better approximation property 
+for  independent cases. 
+
+VI.  CONCLUDING REMARKS 
+
+In  this  paper,  we  propose  two  CP’s  to  quantify  confidence  or 
+satisfaction level  in  DES  simulations. We  define CP in  two  ways: 
+One is the probability that  at least one  of  the  selected designs is  a 
+good design. Alternatively, we define CP as the probability that the 
+observed best design is very close to the true best design. Stopping 
+a  simulation when  CP  becomes  sufficiently large  can  dramatically 
+reduce computation time. We find a simple lower bound ACP for each 
+CP. Numerical testing shows that ACP could be an approximation to 
+CP in many cases. In the future research, we have to further quantify 
+how tight ACP is. In addition, since the estimation of confidence level 
+for  large DES  is  feasible,  we  can  consider  the  following  problem 
+for  further reducing the  computation cost:  To  obtain  a  satisfactory 
+
+

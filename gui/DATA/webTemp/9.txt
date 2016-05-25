@@ -1,0 +1,879 @@
+Feature Subset Selection Bias for Classiﬁcation Learning
+
+Surendra K. Singhi
+Department of Computer Science and Engineering, Arizona State University, Tempe, AZ 85287-8809, USA
+
+surendra@asu.edu
+
+Huan Liu
+Department of Computer Science and Engineering, Arizona State University, Tempe, AZ 85287-8809, USA
+
+hliu@asu.edu
+
+Abstract
+
+Feature selection is often applied to high-
+dimensional data prior to classiﬁcation learn-
+ing. Using the same training dataset in
+both selection and learning can result in so-
+called feature subset selection bias. This
+bias putatively can exacerbate data over-
+ﬁtting and negatively aﬀect classiﬁcation per-
+formance. However, in current practice sepa-
+rate datasets are seldom employed for selec-
+tion and learning, because dividing the train-
+ing data into two datasets for feature selec-
+tion and classiﬁer learning respectively re-
+duces the amount of data that can be used in
+either task. This work attempts to address
+this dilemma. We formalize selection bias
+for classiﬁcation learning, analyze its statis-
+tical properties, and study factors that aﬀect
+selection bias, as well as how the bias im-
+pacts classiﬁcation learning via various ex-
+periments. This research endeavors to pro-
+vide illustration and explanation why the
+bias may not cause negative impact in classi-
+ﬁcation as much as expected in regression.
+
+1. Introduction
+
+Feature selection is a widely used dimensionality re-
+duction technique, which has been the focus of much
+research in machine learning and data mining (Guyon
+& Elisseeﬀ, 2003; Liu & Yu, 2005) and found ap-
+plications in text classiﬁcation, Web mining, gene
+expression micro-array analysis, combinatorial chem-
+istry, image analysis, etc. It not only allows for faster
+model building by reducing the number of features,
+but also helps remove irrelevant, redundant and noisy
+
+Appearing in Proceedings of the 23 rd International Con-
+ference on Machine Learning, Pittsburgh, PA, 2006. Copy-
+right 2006 by the author(s)/owner(s).
+
+features, thus in turn allows for building simpler and
+more comprehensible classiﬁcation models with good
+classiﬁcation performance.
+A common practice of feature selection is to use the
+training data D to select features, and then conduct
+classiﬁcation learning on the same D with selected fea-
+tures. The use of the same training data for feature se-
+lection and classiﬁcation learning can eventuate some
+bias in the estimates of the classiﬁer parameters. This
+bias known as ‘feature subset selection bias’ or ‘selec-
+tion bias’ has been studied in the context of regression
+in Statistics (Miller, 2002). Statisticians often recom-
+mend (Miller, 2002; Zhang, 1992) that one should be
+careful about its magnitude in selecting features (or
+attributes) and then building the regression model. In
+machine learning, (Jensen & Cohen, 2000) discuss dif-
+ferent pathologies aﬀecting induction algorithms and
+how over-searching for the best model can result in bi-
+ased estimates of the parameters, causing overﬁtting of
+the resultant model with deterioration in performance.
+This work studies whether the current common prac-
+tice of using the same training data for feature selec-
+tion and classiﬁcation learning is proper or not.
+We formally deﬁne feature subset selection bias in the
+context of Bayesian learning, study in detail the sta-
+tistical properties of selection bias and various factors
+that aﬀect the bias. We then discuss the relationship
+between selection bias and classiﬁcation learning. This
+work provides theoretical explanations why selection
+bias may not have deteriorating eﬀects as severe as ex-
+pected in regression. We use both synthetic and real-
+world data to verify our hypotheses and ﬁndings, aim-
+ing to better understand behaviors of selection bias.
+We oﬀer and evaluate some options to handle selec-
+tion bias when the amount of training data is limited.
+Section 2 discusses the related research. Section 3 in-
+troduces and explains selection bias. Section 4 exam-
+ines some of the factors that aﬀect the bias. Section 5
+experimentally investigates eﬀects of selection bias on
+
+Feature Subset Selection Bias for Classiﬁcation Learning
+
+classiﬁcation learning. Section 6 presents an empirical
+study with text data. Section 7 concludes this work
+with key ﬁndings.
+
+pendently distributed samples in parallel to the similar
+work associated with regression in (Miller, 2002).
+
+2. Related Research
+
+This section brieﬂy reviews the related work on feature
+subset selection bias in regression, and diﬀerentiates
+this work from others studying related concepts.
+Feature selection bias has been recognized as an im-
+portant problem in the context of regression (Miller,
+2002). The studied regression methods are generally
+based upon the biased least squares regression coeﬃ-
+cients. In (Lane & Dietrich, 1976), the authors carried
+out simulation studies using 6 independent predictors,
+all of which had non-zero real regression coeﬃcients.
+They found that for a sample size of 20, two of the six
+sample regression coeﬃcients on average almost dou-
+bled their true values when those were selected. An
+important concern about feature selection bias in re-
+gression is about the ability to make inference (Zhang,
+1992; Chatﬁeld, 1995) with feature selection bias in the
+built models. This bias can make the relationship be-
+tween the features and the output (class) look stronger
+than it should be. Feature selection bias can also ad-
+versely aﬀect the prediction ability of the model. This
+is because the model overﬁts the data in the presence of
+selection bias and may not generalize well. The above
+ﬁndings have motivated this work. As we know, regres-
+sion analysis is employed to make quantitative predic-
+tions, while classiﬁcation is used to make qualitative
+predictions.
+It is therefore inappropriate to directly
+generalize the results from regression to classiﬁcation.
+Feature selection bias is diﬀerent from ‘sample selec-
+tion bias’. (Zadrozny, 2004) studies the sample selec-
+tion bias which refers to the fact that the data sam-
+ples collected for learning may not be randomly drawn
+from a population. Sample selection bias is an im-
+portant problem with data collected from surveys and
+polls where due to the nature of sampling process, data
+samples from some portions of the population may be
+over-represented, while other portions may be under-
+represented or hardly present. The selection bias dis-
+cussed in this paper occurs due to the interaction be-
+tween feature selection and classiﬁcation learning.
+In (Jensen & Neville, 2002), ‘feature selection bias’ is
+used in the context of relational learning to denote
+the property that some features may have an artiﬁcial
+linkage with the class, causing them to be selected due
+to the relational nature of the data. To our knowledge,
+our work is the ﬁrst to study feature subset selection
+bias in classiﬁcation learning using identical and inde-
+
+3. Deﬁnition of Selection Bias
+
+We now explain and deﬁne feature subset selection bias
+in which ‘bias’ refers to an oﬀset or the diﬀerence be-
+tween the true expected value and the estimated ex-
+pected value (Duda et al., 2000), that is,
+
+bias = E[θ] − E[ˆθ]
+
+3.1. Example
+
+n).
+
+Consider the following thought experiment. We are
+given two types of crops, A and B, each with a life
+span of one month. We assume that the yields of
+both crops are identical and each has a normal dis-
+tribution ∼ N(µ, σ). Our task is to select the best
+crop in terms of mean yield1 and estimate this value
+based on n-month observations. (1) If we were to just
+randomly select a crop and estimate its mean yield,
+then the estimate of the mean yield will be a ran-
+dom variable ˆµ with a probability density function
+f(ˆµ) ∼ N(µ, σ/
+(2) But instead of randomly
+selecting the crop, if we pick the best one after the
+n-month observation and then report its yield, then
+in this case the estimate of the mean yield will follow
+the distribution of a random variable of the second or-
+der statistic2 for a sample of size 2, i.e., distribution
+2f(ˆµ)F (ˆµ), where F (ˆµ) is the cumulative distribution
+function for f(ˆµ). Let the expected value of this distri-
+bution be µ0. The diﬀerence between µ0 and µ is selec-
+tion bias in the estimate of the yield of the crop. (3) If
+one repeats this experiment just to estimate the yield
+of the best crop without selection of the best crop,
+then the average yield reported during that period will
+again be an unbiased distribution f(ˆµ) ∼ N(µ, σ/
+n)
+as in (1).
+Similarly, in feature selection we select features instead
+of crops, and selecting features that will help improve
+classiﬁcation accuracy replaces searching for the crop
+that maximizes the mean yield. Subsequently, when
+the same dataset is used for estimating the classiﬁer
+parameters, the probability estimates tend to be bi-
+ased.
+
+√
+
+√
+
+1Other parameters can also be used to decide the best
+
+crop, but for simplicity we use the mean.
+
+2Given a sample of N variates X1, . . . , XN , when they
+are reordered as Y1 < Y2 < . . . < YN . Then Yi is called the
+ith order statistic. (Bain & Engelhardt, 1991)
+
+Feature Subset Selection Bias for Classiﬁcation Learning
+
+3.2. Deﬁnition
+
+We now formally deﬁne selection bias for Bayesian
+learning. Let X = (X1, X2, . . . , Xp, Xp+1, . . . , Xq) be
+the set of features, where q is the dimensionality, and
+Y be the class variable. Also, the relationship between
+the class Y and the features X be Bayesian,
+P (Y |X) = P (X1, . . . , Xq|Y )P (Y )
+
+P (X1, . . . , Xq)
+
+A feature selection algorithm will select a subset of
+features, without loss of generality we assume that the
+following p features are selected.
+
+XA = (X1, X2, . . . , Xp), and
+XA ⊆ X
+
+For Bayesian classiﬁers to make posteriori probabil-
+ity predictions, we estimate class-conditional proba-
+bilities. So, if the class of interest is Y = ωj and the
+instance value for the feature subset XA is
+
+XA = vA
+vA = (v1, v2, . . . , vp) where vi ∈ Domain(Xi)
+
+We denote the class-conditional probability as
+
+P (XA = vA|Y = ωj)
+
+The expected value of P (XA = vA|Y = ωj) in the
+original populations be
+
+E[P (XA = vA|Y = ωj)]
+
+(1)
+
+A feature selection algorithm (FSA) selects a certain
+subset of features that outperform other features based
+upon certain selection criteria. Due to this, when the
+same dataset is used for selecting the feature subset
+A and for estimating the probability value P (XA =
+vA|Y = ωj), the estimated probability values tend to
+get biased. This bias is conditioned upon the feature
+subset A and the feature selection algorithm (FSA),
+and hence the estimated conditional probability is rep-
+resented as
+E[P (XA = vA|Y = ωj)|F SA selected subset A] (2)
+
+The diﬀerence between the conditional expected value
+in (2) and the unconditional expected value in the orig-
+inal population (1) is selection bias.
+
+Deﬁnition (Selection Bias):
+
+E[P (XA = vA|Y = ωj)|F SA selected
+
+subset A] − E[P (XA = vA|Y = ωj)]
+
+Table 1. Properties of attributes: (a) Discrete dataset -
+class conditional probabilities (b) Continuous dataset -
+class conditional means and standard deviations
+
+(a)
+
+Attribute Values
+
+Hot
+Cold
+
+(b)
+
++
+
+0.75
+0.25
+
+-
+
+0.25
+0.75
+
+Mean
+
+Standard Deviation
+
++
+
+µ+ = 0.1
+σ+ = 1
+
+-
+
+µ− = −0.1
+σ− = 1
+
+Empirically, the unconditional expected value (1) or
+the value without feature selection can be obtained
+by averaging over all datasets containing indepen-
+dent and identically distributed samples; and the con-
+ditional expected value in (2) or the biased value can
+be estimated by averaging over those datasets where
+FSA selected feature set A. In other words, when we
+use the same dataset for both feature selection and
+training, we tend to measure the biased value instead
+of the unconditional expected value.
+
+4. Selection Bias and Related Issues
+
+We create synthetic datasets with known distributions
+to understand selection bias, as they allow for con-
+trolled experiments and better understanding.
+
+4.1. Synthetic Datasets
+
+Two types of datasets with binary class were gener-
+ated: one with discrete features, and the other with
+continuous features. For the discrete data, each fea-
+ture has two possible values {Hot, Cold}, and the
+class conditional probabilities are shown in Table 1(a).
+For the continuous data the class conditional distri-
+bution of the attributes is normal and has values as
+shown in Table 1(b). All features in each type of
+dataset are independent and have identical properties.
+By design the datasets are symmetric, i.e., in discrete
+datasets, P (x = hot|+) = P (x = cold|−) = 0.75,
+while P (x = cold|+) = P (x = hot|−) = 0.25. We
+created discrete and continuous datasets with 100 at-
+tributes and 1000 instances (n = n− = n+ = 500 from
+each class).
+
+4.2. Illustrating Selection Bias
+
+Using the synthetic dataset a Na¨ıve Bayes classiﬁer
+(WEKA-Simple Na¨ıve Bayes (Witten & Frank, 2005))
+
+Feature Subset Selection Bias for Classiﬁcation Learning
+
+means that, for binary attributes a positive selection
+bias for P (x = cold|−) will result in a negative selec-
+tion bias of equal magnitude for the P (x = hot|−).
+For continuous datasets, the underlying distribution
+was assumed to be Normal, and maximum likeli-
+hood estimation was applied to estimate the class-
+conditional attribute mean and standard deviation.
+√
+The distribution of values of unbiased negative (-
+) class-conditional mean will be ∼ N(µ−, σ−/
+n),
+while the distribution of standard deviation will be
+
+∼ N(σ−,p2(n − 1)σ2−/n). In our simulation results
+
+shown in Figure 2(a), no bias is observed in the esti-
+mate of the class-conditional standard deviations (σ−)
+before and after feature selection. The distribution of
+σ+ is similar. But, for a given attribute, there is a bias
+in the class conditional attribute means (µ+ and µ−);
+such that the distributions of µ+ and µ− are shifted
+away from each other. Since there is no bias in the ex-
+pected value of class-conditional standard deviations,
+the selection bias for any feature value x is directly
+proportional to the bias in the expected value of the
+class-conditional attribute mean (see Figure 2(b) and
+2(c)). Due to selection bias, there is an illusion that
+an attribute does a better job of separating the diﬀer-
+ent classes than what it actually does in the original
+population.
+We also conducted experiments using multi-class syn-
+thetic datasets and diﬀerent feature selection algo-
+rithms such as Information Gain Attribute evaluation
+criteria, Relief-F, One-R, Chi-Squared Attribute eval-
+uation available in (Witten & Frank, 2005). The de-
+tailed results are not included here due to space con-
+straint. In summary, regardless of feature selection al-
+gorithms, bias was observed with varied magnitudes.
+Irrespective of the number of classes, for discrete fea-
+tures, the attribute conditional probabilities are biased
+such that the diﬀerent classes of instances are better
+separated than they should be. Attribute values hav-
+ing relatively high class-conditional probabilities tend
+to get positive bias; while attribute values with rela-
+tively low class-conditional probabilities are negatively
+biased. Likewise, when a continuous feature is se-
+lected, the attribute means for diﬀerent classes shift
+away from each other such that the attribute seems to
+better isolate the diﬀerent classes.
+
+4.3. Factors Aﬀecting Selection Bias
+
+We now examine some factors aﬀecting selection bias.
+
+4.3.1. Number of Instances
+
+The ﬁrst factor is the eﬀect of number of data points or
+instances on selection bias. We perform similar exper-
+
+Figure 1. Illustrating selection bias on the discrete data,
+using the distribution of P (X|Y ).
+
+was built and parameters such as class-conditional
+probabilities for the discrete attributes, and class con-
+ditional attribute mean and standard deviation for the
+continuous attributes were measured. Then, the top
+10 attributes were selected using the SVM recursive
+feature elimination algorithm (Guyon et al., 2002).
+On the feature-reduced data, a Na¨ıve Bayes classi-
+ﬁer was once again built and the diﬀerent parame-
+ters were estimated. This experiment was repeated
+500 times with diﬀerent, randomly generated synthetic
+datasets. Because of the symmetry of the original
+datasets, the plots of distribution of P (x = cold|−)
+and P (x = hot|+) are identical, and so we only show
+the distribution of P (x = cold|−) before and after fea-
+ture selection in Figure 1; also the distributions of the
+P (x = hot|−) and P (x = cold|+) are mirror image of
+this distribution and hence not shown. The before fea-
+ture selection distribution implies the distribution of
+the class conditional probability of the feature in the
+datasets created from the original population. While
+the after feature selection distribution implies the dis-
+tribution of the class conditional probability of the fea-
+ture in the datasets where the feature was selected.
+For discrete feature the before feature selection distri-
+bution forms a binomial distribution (approximated
+p = P (X|Y )). Also by design, because the attributes
+are independent and identical, for simplicity we only
+show the probability estimate of one attribute, but
+the result can be generalized to the entire set. Selec-
+tion bias is the diﬀerence between the expected values
+of the distributions of P (X|Y ) before and after fea-
+ture selection. For P (x = cold|−) the distribution of
+P (X|Y ) after feature selection is biased on the higher
+side, resulting in a positive selection bias. Since the to-
+tal sum of the class conditional probabilities for a given
+class (in both biased and unbiased case) is 1, the total
+selection bias of a class over all values of X is 0. This
+
+by a normal distribution ∼ N(p,pp(1 − p)/n), where
+
+Feature Subset Selection Bias for Classiﬁcation Learning
+
+(a) Probability distribution of σ− (or σ+)
+
+(b) Probability distribution of µ−
+
+(c) Probability distribution of µ+
+
+Figure 2. Illustrating selection bias on the continuous data.
+
+(a) Discrete Data - P (x = cold|−)
+
+(b) Continuous Data - µ−
+
+Figure 3. Eﬀect on µ− and P (x = cold|−), while varying
+the number of instances in the dataset.
+
+iments as mentioned earlier by varying the number of
+instances (n+ + n−) (or data size) from 5, 000 down to
+100. For the discrete data, Figure 3(a) shows how se-
+lection bias increases for P (x = cold|−) as the number
+of instances decreases. This is because as the num-
+ber of instances decreases, the variance of the distri-
+bution of estimated P (X|Y ) increases, resulting in an
+increased bias. In simulation, we observe that small
+datasets can cause acute selection bias - an almost
+vertical spike near datasets with 100 instances. This
+result is very important especially in the context of
+microarray gene analysis datasets (Baxevanis & Ouel-
+lette, 2005), or text classiﬁcation where one needs to
+select features with some hundreds of or fewer docu-
+ments (Forman, 2003). Similar results are obtained for
+the continuous dataset as depicted in Figure 3(b).
+
+4.3.2. Effect of σ for Continuous Data
+We also observe how changing the values of σ+ and σ−
+in the continuous data aﬀects selection bias. In this
+experiment, n+ = n− = 500 remains constant, but σ+
+and σ− are varied from 0.1 to 2.9 in an increment of
+
+Feature Subset Selection Bias for Classiﬁcation Learning
+
+Figure 4. µ+ and µ− before and after feature selection
+while varying the class conditional attribute standard de-
+viation.
+
+Figure 6. Decision boundaries when σ− 6= σ+.
+
+amount of selection bias in the attributes of both the
+classes, and hence the decision boundary will remain
+at its original position, resulting in no change in classi-
+ﬁcation error rate. We set σ− = σ+ = 0.5, µ− = −0.5,
+and µ+ = 0.5. Using these parameters, we create
+a dataset of 200 instances with 200 continuous at-
+tributes. We then select the top 5 attributes using
+SVM recursive feature elimination and record their
+averaged estimates of µ and σ. The simulation is re-
+peated 100 times, the averaged results are depicted
+in Figure 5. It shows that (1) the distributions have
+moved away from their original positions in the oppo-
+site direction after feature selection; and (2) the two
+decision boundaries are almost the same.
+5.2. Case 2: σ− 6= σ+
+Without loss of generality we assume that σ− > σ+.
+We also assume that the bias in the estimate of µ is
+directly proportional to the value of σ. Hence, there
+is a bigger bias in the estimate of µ− than that of µ+.
+We set σ− = 1, σ+ = 0.5, µ− = −0.75, and µ+ = 0.25.
+Following the same procedure in Case 1, we obtain the
+plots in Figure 6. The decision boundary after feature
+selection has a more obvious shift than in Case 1 away
+from the decision boundary before feature selection,
+although the diﬀerence is still small in absolute value.
+This is because when the σ is high, there needs to be a
+larger change in the µ to shift the decision boundary.
+In sum, selection bias has limited impact on the change
+of decision boundary in classiﬁcation.
+
+6. Empirical Study with Text Data
+
+The experimental results in the previous two sections
+indicate that (1) the increase of the number of in-
+stances usually decreases the selection bias; (2) bigger
+attribute variance leads to bigger selection bias; and
+
+Figure 5. Decision boundaries are almost the same when
+σ− = σ+ and there is an equal amount of selection bias.
+
+0.2. As seen in Figure 4, when the value of σ+ or σ−
+is big, the standard deviation of the distribution of µ+
+√
+or µ− is also big (unbiased µ+ ∼ N(µ+, σ+/
+n+) and
+√
+unbiased µ− ∼ N(µ−, σ−/
+n−)). A bigger attribute
+standard deviation results in more selection bias. In
+other words, such a feature is more likely selected as it
+seemingly better separates the classes during feature
+selection.
+
+5. Selection Bias and Classiﬁcation
+
+Our discussions so far centered around the estimate of
+selection bias of a feature-value given a class. Since it
+is the decision boundary which matters most in clas-
+siﬁcation learning, we now discuss how selection bias
+aﬀects the decision boundary. Based on the results in
+Section 4, we evaluate two general cases.
+
+5.1. Case 1: σ− = σ+
+When the class-conditional standard deviation in both
+classes is the same, it is likely that there is an equal
+
+Feature Subset Selection Bias for Classiﬁcation Learning
+
+(3) selection bias has diﬀerent impacts on classiﬁcation
+and on regression. This section focuses on experiments
+with benchmark text data in (Forman, 2003) contain-
+ing 19 datasets. For each dataset, we divide it equally
+into 3 parts (A, B, and C). Parts A and B are used for
+feature selection and learning. Part C is used for test.
+For the ﬁrst set of experiments, we investigate if using
+separate datasets for feature selection and classiﬁca-
+tion learning will make a diﬀerence. Hence, we com-
+pare two models: a biased model (M1) that uses one
+part of data (say Part B) for both feature selection
+and learning; and an unbiased model (M2) that uses
+one part of data (say Part A) for feature selection and
+the other part of data (say Part B) for classiﬁcation
+learning. The same process is repeated with the roles
+of Part A and Part B swapped and the test results on
+Part C are averaged. The experiment is repeated 25
+times, and the results are averaged. Clearly, if there
+is any diﬀerence between the two models, it should be
+solely due to the selection bias. The test results on
+Part C are measured using the error rates, the micro
+and macro F-measures3 (Witten & Frank, 2005), as
+the latter two are commonly used criteria for evaluat-
+ing learning algorithms on text data (Forman, 2003).
+The macro-averaged F-measure is the arithmetic mean
+of the F-measure computed for each class, while micro-
+averaged F-measure is an average weighted by the class
+distribution. To compare the performance of the bi-
+ased and unbiased models, we employ the ‘corrected
+resampling t-test’ (Nadeau & Bengio, 2003), instead of
+the ‘paired t-test with resampling’ which can have un-
+acceptably high Type I error (Dietterich, 1998). Out
+of the 19 datasets, only 5 datasets were observed to
+have statistically signiﬁcant diﬀerences at α = 0.05.
+The results are summarized in Table 2. The values af-
+ter the ± sign are the standard deviations. This ﬁrst
+set of experiments conﬁrms that selection bias exists
+but has limited impact on classiﬁcation learning con-
+trasting its eﬀect in regression (Miller, 2002).
+The above experiments inspired us to ask the follow-
+ing: (1) when the training data is limited, should we
+use all of it for both feature selection and classiﬁcation
+learning? and (2) if we need to stick to the principle
+that separate data should be used for feature selection
+and classiﬁcation learning, do we have an alternative?
+One solution achieving some separation between data
+for feature selection and learning is using one boot-
+strap sample from the entire dataset for feature se-
+lection and another bootstrap sample for classiﬁcation
+learning. To verify the eﬃcacy of this bootstrap-based
+
+3F-measure is the harmonic mean of precision and re-
+
+call.
+
+Figure 7. Illustrating the eﬀect of bootstrap in reducing
+selection bias.
+
+approach, we conducted a simulation experiment with
+discrete data as the one in Section 4.2 adding the boot-
+strap model. Figure 7 shows the slight reduction of se-
+lection bias. The bootstrap distribution has its mean
+shifted slightly to the left of the mean of the biased dis-
+tribution (with bigger variance), resulting in a lower
+expected value. Hence, it slightly reduces selection
+bias. We then design the second set of experiments
+on the 5 datasets that exhibit the eﬀect of selection
+bias using two additional models. One is the bootstrap
+model (M3), which uses one bootstrap sample from
+combined Parts A and B for feature selection, and an-
+other bootstrap sample for classiﬁcation learning. The
+other model is called the biased complete model (M4)
+that uses Parts A and B as one part for both feature se-
+lection and learning. The experiment is also repeated
+for 25 times and averaged test results on Part C are
+reported and summarized in Table 3. In sum, the av-
+eraged values of M4 are consistently better, but the
+two models are not statistically signiﬁcantly diﬀerent
+based on the corrected resampling t-test (α = 0.05).
+Both M3 and M4 are consistently better than the un-
+biased model (M2) (in Table 2). Combining the results
+in the two sets of experiments, we obtain the following:
+(1) selection bias indeed exists; and (2) under normal
+circumstances, one does not need to use separate data
+for feature selection and learning as recommended in
+the Statistics literature.
+
+7. Conclusions
+
+This work is motivated by the research on selection
+bias in regression. We observe selection bias in the
+context of classiﬁcation. However, we arrive at the
+diﬀerent conclusion: selection bias has less negative
+eﬀect in classiﬁcation than that in regression due to
+the disparate functions of the two. We formally deﬁne
+the feature subset selection bias, and design experi-
+
+Feature Subset Selection Bias for Classiﬁcation Learning
+
+Table 2. The results of the 5 datasets in which the unbiased model is signiﬁcantly better than the biased model. Boldfaced
+entries indicate those with signiﬁcant diﬀerence at α = .05.
+
+Dataset
+
+la1
+la2
+tr12
+tr31
+wap
+
+Biased Model (M1)
+
+Error-rate
+19.95±4.59
+18.97±4.26
+38.11±8.58
+15.63±3.73
+28.20±5.97
+
+Micro
+
+74.74±15.42
+76.01±15.63
+52.51±11.46
+60.85±12.90
+46.98±9.69
+
+Macro
+
+79.23±16.30
+80.57±16.52
+61.09±12.97
+84.08±17.29
+69.46±14.26
+
+Unbiased Model (M2)
+
+Error-rate
+18.59±4.23
+18.04±4.03
+33.30±7.58
+14.34±3.54
+27.62±5.89
+
+Micro
+
+76.38±15.70
+77.14±15.85
+56.40±11.94
+62.07±13.19
+47.85±9.89
+
+Macro
+
+80.60±16.54
+81.50±16.70
+66.34±13.90
+85.63±17.61
+70.10±14.39
+
+Table 3. The bootstrap model vs. the biased complete model. No signiﬁcant diﬀerence between the two at α = .05.
+
+Dataset
+
+la1
+la2
+tr12
+tr31
+wap
+
+Bootsrap Model (M3)
+
+Biased Complete Model (M4)
+
+Error-rate
+17.53±4.04
+16.07±3.68
+29.96±8.91
+11.34±3.47
+22.85±5.03
+
+Micro
+
+78.36±16.16
+80.01±16.46
+61.93±14.15
+73.18±15.44
+55.70±11.66
+
+Macro
+
+82.09±16.84
+84.00±17.20
+69.68±15.60
+89.30±18.46
+72.26±15.48
+
+Error-rate
+16.62±3.60
+15.84±3.51
+28.38±7.36
+10.42±2.61
+22.08±4.86
+
+Micro
+
+79.28±16.25
+80.32±16.48
+65.36±13.96
+74.75±15.39
+56.39±11.75
+
+Macro
+
+82.90±16.96
+84.00±17.20
+71.48±15.19
+90.30±18.49
+75.97±15.62
+
+ments to study its statistical properties using synthetic
+datasets and benchmark datasets. This work provides
+evidence that the current practice of using the same
+dataset for feature selection and learning is not inap-
+propriate, and provides illustrations why selection bias
+does not degrade the classiﬁcation performance as it
+does in regression.
+
+Acknowledgments
+
+We thank all the reviewers and senior PC for their
+valuable suggestions. We also thank Subbarao Kamb-
+hampati and George Runger for reviewing initial ver-
+sions of this work and giving valuable suggestions.
+
+References
+Bain, L. J., & Engelhardt, M. (1991).
+
+Introduction
+to probability and mathematical statistics. Duxbury
+Press. 2nd edition.
+
+Baxevanis, A., & Ouellette, B. (2005). Bioinformat-
+ics - a practical guide to the analysis of genes and
+proteins. Wiley. 3rd edition.
+
+Chatﬁeld, C. (1995). Model uncertainty, data mining
+and statistical inference. Journal of the Royal Sta-
+tistical Society, Series A, 158, 419–466.
+
+Dietterich, T. (1998). Approximate statistical tests
+for comparing supervised classiﬁcation learning al-
+gorithms. Neural Computation, 10, 1895–1924.
+
+Duda, R. O., Hart, P. E., & Stork, D. G. (2000). Pat-
+
+tern classiﬁcation. Wiley. 2nd edition.
+
+Forman, G. (2003). An extensive empirical study of
+feature selection metrics for text classiﬁcation. Jour-
+nal of Machine Learning Research, 3, 1289–1305.
+
+Guyon, I., & Elisseeﬀ, A. (2003). An introduction to
+variable and feature selection. Journal of Machine
+Learning Research, 3, 1157–1182.
+
+Guyon, I., Weston, J., Barnhill, S., & Vapnik, V.
+(2002). Gene selection for cancer classiﬁcation us-
+ing support vector machines. Machine Learning, 46,
+389–422.
+
+Jensen, D., & Neville, J. (2002). Linkage and auto-
+correlation cause feature selection bias in relational
+learning. ICML’02. Morgan Kaufmann.
+
+Jensen, D. D., & Cohen, P. R. (2000). Multiple com-
+parisons in induction algorithms. Machine Learning,
+38, 309–338.
+
+Lane, L. J., & Dietrich, D. L. (1976). Bias of selected
+coeﬃcients in stepwise regression. Proceedings of
+Statist. Comput. Section (pp. 196–200). Americal
+Statistical Association.
+
+Liu, H., & Yu, L. (2005). Toward integrating feature
+selection algorithms for classiﬁcation and clustering.
+IEEE Trans. Knowl. Data Eng., 17, 491–502.
+
+Miller, A. (2002). Subset selection in regression. Chap-
+
+man & Hall/CRC.
+
+Nadeau, C., & Bengio, Y. (2003).
+
+Inference for the
+generalization error. Machine Learning, 52, 239–
+281.
+
+Witten, I., & Frank, E. (2005). Data mining: Practi-
+cal machine learning tools and techniques. Morgan
+Kaufmann. 2nd edition.
+
+Zadrozny, B. (2004). Learning and evaluating classi-
+ﬁers under sample selection bias. ICML’04. ACM.
+Zhang, P. (1992). Inference after variable selection in
+linear regression models. Biometrika, 79, 741–746.
+
+

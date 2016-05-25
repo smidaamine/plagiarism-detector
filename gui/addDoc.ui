@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Dialog</class>
+ <widget class="QDialog" name="Dialog">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>405</width>
+    <height>374</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Dialog</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">background-color: rgb(255, 255, 255);</string>
+  </property>
+  <widget class="QWidget" name="layoutWidget">
+   <property name="geometry">
+    <rect>
+     <x>9</x>
+     <y>319</y>
+     <width>381</width>
+     <height>35</height>
+    </rect>
+   </property>
+   <layout class="QHBoxLayout" name="horizontalLayout_2">
+    <item>
+     <widget class="QPushButton" name="saveBtn">
+      <property name="styleSheet">
+       <string notr="true"> QPushButton {
+background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, color: rgb(0, 170, 0);), color-stop(1, #1a5c66));
+	background:-moz-linear-gradient(top, #599bb3 5%, #1a5c66 100%);
+	background:-webkit-linear-gradient(top, #599bb3 5%, #1a5c66 100%);
+	background:-o-linear-gradient(top, #599bb3 5%, #1a5c66 100%);
+	background:-ms-linear-gradient(top, #599bb3 5%, #1a5c66 100%);
+	background:linear-gradient(to bottom, #599bb3 5%, #1a5c66 100%);
+	background-color:#599bb3;
+	
+	border-radius:3px;
+	border:1px solid #5c298f;
+	color:#ffffff;
+	font-family:arial;
+	font-size:17px;
+	padding:6px 24px;
+	text-decoration:none;
+	
+}
+QPushButton:hover {
+	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #1a5c66), color-stop(1, #599bb3));
+	background:-moz-linear-gradient(top, #1a5c66 5%, #599bb3 100%);
+	background:-webkit-linear-gradient(top, #1a5c66 5%, #599bb3 100%);
+	background:-o-linear-gradient(top, #1a5c66 5%, #599bb3 100%);
+	background:-ms-linear-gradient(top, #1a5c66 5%, #599bb3 100%);
+	background:linear-gradient(to bottom, #1a5c66 5%, #599bb3 100%);
+	background-color:#1a5c66;
+}
+QPushButton:active {
+	position:relative;
+	top:1px;
+}
+</string>
+      </property>
+      <property name="text">
+       <string>Save</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QPushButton" name="cancel_btn">
+      <property name="styleSheet">
+       <string notr="true"> QPushButton {
+background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, color: rgb(0, 170, 0);), color-stop(1, #1a5c66));
+	background:-moz-linear-gradient(top, #599bb3 5%, #1a5c66 100%);
+	background:-webkit-linear-gradient(top, #599bb3 5%, #1a5c66 100%);
+	background:-o-linear-gradient(top, #599bb3 5%, #1a5c66 100%);
+	background:-ms-linear-gradient(top, #599bb3 5%, #1a5c66 100%);
+	background:linear-gradient(to bottom, #599bb3 5%, #1a5c66 100%);
+	background-color:#fe1a00;
+	
+	border-radius:3px;
+	border:1px solid #5c298f;
+	color:#ffffff;
+	font-family:arial;
+	font-size:17px;
+	padding:6px 24px;
+	text-decoration:none;
+	
+}
+QPushButton:hover {
+	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #1a5c66), color-stop(1, #599bb3));
+	background:-moz-linear-gradient(top, #1a5c66 5%, #599bb3 100%);
+	background:-webkit-linear-gradient(top, #1a5c66 5%, #599bb3 100%);
+	background:-o-linear-gradient(top, #1a5c66 5%, #599bb3 100%);
+	background:-ms-linear-gradient(top, #1a5c66 5%, #599bb3 100%);
+	background:linear-gradient(to bottom, #1a5c66 5%, #599bb3 100%);
+	background-color:#1a5c66;
+}
+QPushButton:active {
+	position:relative;
+	top:1px;
+}
+</string>
+      </property>
+      <property name="text">
+       <string>Cancel</string>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QWidget" name="layoutWidget">
+   <property name="geometry">
+    <rect>
+     <x>11</x>
+     <y>224</y>
+     <width>371</width>
+     <height>91</height>
+    </rect>
+   </property>
+   <layout class="QHBoxLayout" name="horizontalLayout">
+    <item>
+     <widget class="QLabel" name="label_6">
+      <property name="styleSheet">
+       <string notr="true">font: 75 10pt &quot;MS Shell Dlg 2&quot;;</string>
+      </property>
+      <property name="text">
+       <string>PS      </string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QTextEdit" name="textEdit"/>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QGroupBox" name="groupBox">
+   <property name="geometry">
+    <rect>
+     <x>11</x>
+     <y>11</y>
+     <width>371</width>
+     <height>211</height>
+    </rect>
+   </property>
+   <property name="title">
+    <string>Dcument Informatins</string>
+   </property>
+   <layout class="QHBoxLayout" name="horizontalLayout_3">
+    <item>
+     <layout class="QVBoxLayout" name="verticalLayout">
+      <item>
+       <widget class="QLabel" name="label">
+        <property name="styleSheet">
+         <string notr="true">font: 75 10pt &quot;MS Shell Dlg 2&quot;;</string>
+        </property>
+        <property name="text">
+         <string>Path/id</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="label_5">
+        <property name="styleSheet">
+         <string notr="true">font: 75 10pt &quot;MS Shell Dlg 2&quot;;</string>
+        </property>
+        <property name="text">
+         <string>ADD by</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="label_3">
+        <property name="text">
+         <string>Palagia LvL</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="label_2">
+        <property name="styleSheet">
+         <string notr="true">font: 75 10pt &quot;MS Shell Dlg 2&quot;;</string>
+        </property>
+        <property name="text">
+         <string>Title</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="label_4">
+        <property name="styleSheet">
+         <string notr="true">font: 75 10pt &quot;MS Shell Dlg 2&quot;;</string>
+        </property>
+        <property name="text">
+         <string>State</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+    <item>
+     <layout class="QVBoxLayout" name="verticalLayout_2">
+      <item>
+       <widget class="QLineEdit" name="pathEdit"/>
+      </item>
+      <item>
+       <widget class="QLineEdit" name="addByEdit"/>
+      </item>
+      <item>
+       <widget class="QLineEdit" name="plagiaLvl_edit"/>
+      </item>
+      <item>
+       <widget class="QLineEdit" name="titleEdit"/>
+      </item>
+      <item>
+       <widget class="QLineEdit" name="statEdit"/>
+      </item>
+     </layout>
+    </item>
+   </layout>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

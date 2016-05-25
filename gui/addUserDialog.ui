@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>AddUserDialog</class>
+ <widget class="QDialog" name="AddUserDialog">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>496</width>
+    <height>401</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Dialog</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">background-color: rgb(255, 255, 255);</string>
+  </property>
+  <widget class="QWidget" name="">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>340</y>
+     <width>451</width>
+     <height>38</height>
+    </rect>
+   </property>
+   <layout class="QHBoxLayout" name="horizontalLayout_2">
+    <item>
+     <widget class="QPushButton" name="save_Btn">
+      <property name="styleSheet">
+       <string notr="true"> QPushButton {
+background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, color: rgb(0, 170, 0);), color-stop(1, #1a5c66));
+	background:-moz-linear-gradient(top, #599bb3 5%, #1a5c66 100%);
+	background:-webkit-linear-gradient(top, #599bb3 5%, #1a5c66 100%);
+	background:-o-linear-gradient(top, #599bb3 5%, #1a5c66 100%);
+	background:-ms-linear-gradient(top, #599bb3 5%, #1a5c66 100%);
+	background:linear-gradient(to bottom, #599bb3 5%, #1a5c66 100%);
+	background-color:#77d42a;
+	
+	border-radius:3px;
+	border:1px solid #5c298f;
+	color:#ffffff;
+	font-family:arial;
+	font-size:19px;
+	padding:6px 24px;
+	text-decoration:none;
+	
+}
+QPushButton:hover {
+	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #1a5c66), color-stop(1, #599bb3));
+	background:-moz-linear-gradient(top, #1a5c66 5%, #599bb3 100%);
+	background:-webkit-linear-gradient(top, #1a5c66 5%, #599bb3 100%);
+	background:-o-linear-gradient(top, #1a5c66 5%, #599bb3 100%);
+	background:-ms-linear-gradient(top, #1a5c66 5%, #599bb3 100%);
+	background:linear-gradient(to bottom, #1a5c66 5%, #599bb3 100%);
+	background-color:#1a5c66;
+}
+QPushButton:active {
+	position:relative;
+	top:1px;
+}
+</string>
+      </property>
+      <property name="text">
+       <string>Save</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QPushButton" name="cancel_Btn">
+      <property name="styleSheet">
+       <string notr="true"> QPushButton {
+background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, color: rgb(0, 170, 0);), color-stop(1, #1a5c66));
+	background:-moz-linear-gradient(top, #599bb3 5%, #1a5c66 100%);
+	background:-webkit-linear-gradient(top, #599bb3 5%, #1a5c66 100%);
+	background:-o-linear-gradient(top, #599bb3 5%, #1a5c66 100%);
+	background:-ms-linear-gradient(top, #599bb3 5%, #1a5c66 100%);
+	background:linear-gradient(to bottom, #599bb3 5%, #1a5c66 100%);
+	background-color:#fe1a00;
+	
+	border-radius:3px;
+	border:1px solid #5c298f;
+	color:#ffffff;
+	font-family:arial;
+	font-size:17px;
+	padding:6px 24px;
+	text-decoration:none;
+	
+}
+QPushButton:hover {
+	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #1a5c66), color-stop(1, #599bb3));
+	background:-moz-linear-gradient(top, #1a5c66 5%, #599bb3 100%);
+	background:-webkit-linear-gradient(top, #1a5c66 5%, #599bb3 100%);
+	background:-o-linear-gradient(top, #1a5c66 5%, #599bb3 100%);
+	background:-ms-linear-gradient(top, #1a5c66 5%, #599bb3 100%);
+	background:linear-gradient(to bottom, #1a5c66 5%, #599bb3 100%);
+	background-color:#1a5c66;
+}
+QPushButton:active {
+	position:relative;
+	top:1px;
+}
+</string>
+      </property>
+      <property name="text">
+       <string>Cancel</string>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QGroupBox" name="">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>10</y>
+     <width>451</width>
+     <height>315</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">font: 75 12pt &quot;MS Shell Dlg 2&quot;;</string>
+   </property>
+   <property name="title">
+    <string>User Informations</string>
+   </property>
+   <layout class="QHBoxLayout" name="horizontalLayout">
+    <item>
+     <layout class="QVBoxLayout" name="verticalLayout">
+      <item>
+       <widget class="QLabel" name="userName_label">
+        <property name="text">
+         <string>UserName</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="firstName_label">
+        <property name="text">
+         <string>First Name</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="lastName_labe">
+        <property name="text">
+         <string>Last Name</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="passwor_lable">
+        <property name="text">
+         <string>PassWord</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="email_Lable">
+        <property name="text">
+         <string>Email</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="univ_lable">
+        <property name="text">
+         <string>Univ</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="label_4">
+        <property name="text">
+         <string>Proff</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+    <item>
+     <layout class="QVBoxLayout" name="verticalLayout_2">
+      <item>
+       <widget class="QLineEdit" name="userName_edit"/>
+      </item>
+      <item>
+       <widget class="QLineEdit" name="firstName_edit"/>
+      </item>
+      <item>
+       <widget class="QLineEdit" name="lastName_edit"/>
+      </item>
+      <item>
+       <widget class="QLineEdit" name="password_edit"/>
+      </item>
+      <item>
+       <widget class="QLineEdit" name="email_edit"/>
+      </item>
+      <item>
+       <widget class="QLineEdit" name="univ_edit"/>
+      </item>
+      <item>
+       <widget class="QLineEdit" name="prof_edit"/>
+      </item>
+     </layout>
+    </item>
+   </layout>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
